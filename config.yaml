@@ -14,8 +14,18 @@ sources:
       components:
         enabled: true
         values:
+          - Admin console (console.tailscale.com)
+          - API (api.tailscale.com)
           - Coordination service
-          - DERP
+          - DERP relay servers
+          - Certificates
+          - Mullvad exit nodes
+          - Homepage and Documentation (tailscale.com)
+          - Package server (pkgs.tailscale.com)
+          - Funnel
+          - Aperture
+          - Tailscale Support
+          - Tailscale PAM
     message:
       title: true
       status: true
@@ -28,6 +38,25 @@ sources:
     schedule:
       type: interval
       interval: 600
+    filters:
+      required_matches: 1
+      severity:
+        enabled: true
+        values:
+          - Major
+          - Critical
+      components:
+        enabled: true
+        values:
+          - API
+          - Dashboard
+    message:
+      title: true
+      severity: true
+      status: true
+      components: true
+      updated_at: true
+      link: true
 
   scaleway:
     enabled: true

@@ -159,86 +159,41 @@ class TailscaleSource(Source):
     def normalize_component(component: str) -> str:
         return " ".join(component.lower().split())
 
-    def build_message(
-        self,
-        title: str,
-        status: str,
-        components: list[str],
-        pub_date: str,
-        link: str,
-    ) -> str:
-        escaped_title = escape(
-            title
-        )
+    def build_message(self, title: str, status: str, components: list[str], pub_date: str, link: str) -> str:
+        escaped_title = escape(title)
+        escaped_status = escape(status)
+        escaped_components = [escape(component) for component in components]
 
-        escaped_status = escape(
-            status
-        )
+        formatted_pub_date = self.format_date(pub_date)
 
-        escaped_components = [
-            escape(component)
-            for component in components
-        ]
+        escaped_link = escape(link, quote=True)
 
-        formatted_pub_date = self.format_date(
-            pub_date
-        )
-
-        escaped_link = escape(
-            link,
-            quote=True,
-        )
-
-        if status.lower() in (
-            "resolved",
-            "complete",
-        ):
-            header = (
-                "✅ <b>Tailscale Incident:</b>"
-            )
+        if status.lower() in ("resolved", "complete"):
+            header = ("✅ <b>Tailscale Incident:</b>")
         else:
-            header = (
-                "🚨 <b>Tailscale Incident:</b>"
-            )
+            header = ("🚨 <b>Tailscale Incident:</b>")
 
         fields = []
 
         if self.message_config.title:
-            fields.append(
-                f"- <b>Message:</b> "
-                f"{escaped_title}"
-            )
+            fields.append(f"- <b>Message:</b> {escaped_title}")
 
         if self.message_config.status:
-            fields.append(
-                f"- <b>Status:</b> "
-                f"{escaped_status}"
-            )
+            fields.append(f"- <b>Status:</b> {escaped_status}")
 
         if self.message_config.components:
             if escaped_components:
-                components_text = ", ".join(
-                    escaped_components
-                )
+                components_text = ", ".join(escaped_components)
             else:
                 components_text = "None"
 
-            fields.append(
-                f"- <b>Components:</b> "
-                f"{components_text}"
-            )
+            fields.append(f"- <b>Components:</b> {components_text}")
 
         if self.message_config.updated_at:
-            fields.append(
-                f"- <b>Incident update:</b> "
-                f"{formatted_pub_date}"
-            )
+            fields.append(f"- <b>Incident update:</b> {formatted_pub_date}")
 
         if self.message_config.link:
-            fields.append(
-                f"- <b>Link:</b> "
-                f"{escaped_link}"
-            )
+            fields.append(f"- <b>Link:</b> {escaped_link}")
 
         if not fields:
             return header
