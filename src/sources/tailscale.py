@@ -22,13 +22,7 @@ logger = logging.getLogger(__name__)
 class TailscaleSource(Source):
     URL = "https://status.tailscale.com/feed.rss"
 
-    def __init__(
-        self,
-        client: httpx.AsyncClient,
-        notifier: Notifier,
-        filters: TailscaleFilterConfig,
-        message: TailscaleMessageConfig,
-    ):
+    def __init__(self, client: httpx.AsyncClient, notifier: Notifier, filters: TailscaleFilterConfig, message: TailscaleMessageConfig):
         self.client = client
         self.notifier = notifier
         self.filters = filters
@@ -48,35 +42,24 @@ class TailscaleSource(Source):
             logger.info("Tailscale: no incidents")
             return
 
-        latest_updated_at = self.parse_date(
-            incidents[0].findtext(
-                "pubDate"
-            )
-        )
+        latest_updated_at = self.parse_date(incidents[0].findtext("pubDate"))
 
         if self.last_updated_at is None:
-            # self.last_updated_at = latest_updated_at self.last_updated_at
-            self.last_updated_at = self.parse_date("Tue, 01 Sep 2026 16:19:03 GMT")
-            logger.info(
-                "Tailscale: initialized last_updated_at=%s",
-                latest_updated_at.isoformat(),
-            )
+            # self.last_updated_at = latest_updated_at
+            self.last_updated_at = self.parse_date("Sat, 02 Oct 2026 01:08:17 GMT")
+            logger.info("Tailscale: initialized last_updated_at=%s", latest_updated_at.isoformat())
 
             return
 
         new_incidents = []
 
         for incident in incidents:
-            pub_date_string = incident.findtext(
-                "pubDate"
-            )
+            pub_date_string = incident.findtext("pubDate")
 
             if not pub_date_string:
                 continue
 
-            pub_date = self.parse_date(
-                pub_date_string
-            )
+            pub_date = self.parse_date(pub_date_string)
 
             if pub_date <= self.last_updated_at:
                 break
@@ -84,30 +67,17 @@ class TailscaleSource(Source):
             new_incidents.append(incident)
 
         if not new_incidents:
-            logger.info(
-                "Tailscale: no new updates"
-            )
+            logger.info("Tailscale: no new updates")
             return
 
-        logger.info(
-            "Tailscale: found %d new update(s)",
-            len(new_incidents),
-        )
+        logger.info("Tailscale: found %d new update(s)", len(new_incidents))
 
         for incident in reversed(new_incidents):
-            description = incident.findtext(
-                "description",
-                "",
-            )
+            description = incident.findtext("description", "")
 
-            title = incident.findtext(
-                "title",
-                "Unknown incident",
-            )
+            title = incident.findtext("title", "Unknown incident")
 
-            status = self.parse_status(
-                description
-            )
+            status = self.parse_status(description)
 
             components = self.parse_components(
                 description
@@ -158,22 +128,11 @@ class TailscaleSource(Source):
             "Tailscale alerts processed"
         )
 
-    async def get_incidents(
-        self,
-    ) -> list[ET.Element]:
-        response = await self.client.get(
-            self.URL
-        )
-
+    async def get_incidents(self) -> list[ET.Element]:
+        response = await self.client.get(self.URL)
         response.raise_for_status()
-
-        root = ET.fromstring(
-            response.content
-        )
-
-        return root.findall(
-            "./channel/item"
-        )
+        root = ET.fromstring(response.content)
+        return root.findall("./channel/item")
 
     def matches_filters(
         self,

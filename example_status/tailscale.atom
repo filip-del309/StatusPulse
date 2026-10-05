@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://status.tailscale.com/</id>
+    <title>Tailscale status</title>
+    <updated>2026-09-23T13:44:02.173Z</updated>
+    <generator>incident.io</generator>
+    <link rel="alternate" href="https://status.tailscale.com/"/>
+    <subtitle>Tailscale status page updates</subtitle>
+    <icon>https://storage.googleapis.com/incident-io-status-page-logos/01JVVMHM883DW11Q7FFM7RFE3Y/tailscale/y3mfmak6.png</icon>
+    <entry>
+        <title type="html"><![CDATA[Iru (formerly Kandji) device posture integration failure]]></title>
+        <id>https://status.tailscale.com//incidents/01M2MF9JTSZB00X83MAXNF7EK9</id>
+        <link href="https://status.tailscale.com//incidents/01M2MF9JTSZB00X83MAXNF7EK9"/>
+        <updated>2026-09-16T08:56:05.327Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.]]></summary>
+        <content type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Maintenance: Scheduled Coordination Service infrastructure upgrade]]></title>
+        <id>https://status.tailscale.com//incidents/01M1M8KDMGRB8B92MW6ZRQ2ANV</id>
+        <link href="https://status.tailscale.com//incidents/01M1M8KDMGRB8B92MW6ZRQ2ANV"/>
+        <updated>2026-09-04T00:18:14.997Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Complete</b><br/><br/>Maintenance has finished<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Coordination service (Operational)</li>
+          </ul>]]></summary>
+        <content type="html"><![CDATA[<b>Status: Complete</b><br/><br/>Maintenance has finished<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Coordination service (Operational)</li>
+          </ul>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Maintenance: Scheduled Coordination service DNS maintenance]]></title>
+        <id>https://status.tailscale.com//incidents/01M1EP7F3S0D20GZJBGMQX6QDT</id>
+        <link href="https://status.tailscale.com//incidents/01M1EP7F3S0D20GZJBGMQX6QDT"/>
+        <updated>2026-09-02T01:50:43.002Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Complete</b><br/><br/>All scheduled maintenance has been completed.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Coordination service (Operational)</li>
+          </ul>]]></summary>
+        <content type="html"><![CDATA[<b>Status: Complete</b><br/><br/>All scheduled maintenance has been completed.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Coordination service (Operational)</li>
+          </ul>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[SCIM groups not being updated for secondary tailnets in multi tailnet organizations]]></title>
+        <id>https://status.tailscale.com//incidents/01M1FKTCV62P9A5EGYZEKDE13N</id>
+        <link href="https://status.tailscale.com//incidents/01M1FKTCV62P9A5EGYZEKDE13N"/>
+        <updated>2026-09-01T23:39:31.155Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.]]></summary>
+        <content type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Funnel connectivity issues]]></title>
+        <id>https://status.tailscale.com//incidents/01M1EG5SDXPY4CQ5F8JGB21KK7</id>
+        <link href="https://status.tailscale.com//incidents/01M1EG5SDXPY4CQ5F8JGB21KK7"/>
+        <updated>2026-09-01T16:19:05.410Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Funnel (Operational)</li>
+          </ul>]]></summary>
+        <content type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Funnel (Operational)</li>
+          </ul>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Google user and group sync issues]]></title>
+        <id>https://status.tailscale.com//incidents/01M14BMGN8E2HAPK2BN28G5P5Q</id>
+        <link href="https://status.tailscale.com//incidents/01M14BMGN8E2HAPK2BN28G5P5Q"/>
+        <updated>2026-08-28T17:06:01.226Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Admin console (console.tailscale.com) (Operational)</li>
+<li>Coordination service (Operational)</li>
+          </ul>]]></summary>
+        <content type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Admin console (console.tailscale.com) (Operational)</li>
+<li>Coordination service (Operational)</li>
+          </ul>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Coordination service issues]]></title>
+        <id>https://status.tailscale.com//incidents/01M0TC96VQKB38VETA9YYW0AEJ</id>
+        <link href="https://status.tailscale.com//incidents/01M0TC96VQKB38VETA9YYW0AEJ"/>
+        <updated>2026-08-24T18:41:58.267Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Coordination service (Operational)</li>
+          </ul>]]></summary>
+        <content type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Coordination service (Operational)</li>
+          </ul>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Coordination service issues]]></title>
+        <id>https://status.tailscale.com//incidents/01M0EAT329782JTJT005A2Y3AD</id>
+        <link href="https://status.tailscale.com//incidents/01M0EAT329782JTJT005A2Y3AD"/>
+        <updated>2026-08-20T03:22:23.657Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Coordination service (Operational)</li>
+<li>Admin console (console.tailscale.com) (Operational)</li>
+          </ul>]]></summary>
+        <content type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Coordination service (Operational)</li>
+<li>Admin console (console.tailscale.com) (Operational)</li>
+          </ul>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Issues with browser-based Tailscale clients]]></title>
+        <id>https://status.tailscale.com//incidents/01M0C99X1K3T55H2RE22TDGD7X</id>
+        <link href="https://status.tailscale.com//incidents/01M0C99X1K3T55H2RE22TDGD7X"/>
+        <updated>2026-08-19T09:22:13.705Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Admin console (console.tailscale.com) (Operational)</li>
+          </ul>]]></summary>
+        <content type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Admin console (console.tailscale.com) (Operational)</li>
+          </ul>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Coordination service performance issues]]></title>
+        <id>https://status.tailscale.com//incidents/01M08PH4MXQSP67JME3894GE2Z</id>
+        <link href="https://status.tailscale.com//incidents/01M08PH4MXQSP67JME3894GE2Z"/>
+        <updated>2026-08-17T22:19:50.895Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Coordination service (Operational)</li>
+          </ul>]]></summary>
+        <content type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Coordination service (Operational)</li>
+          </ul>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Certificate creation issues]]></title>
+        <id>https://status.tailscale.com//incidents/01KZP71YTTQQB95JEFNMY0J15A</id>
+        <link href="https://status.tailscale.com//incidents/01KZP71YTTQQB95JEFNMY0J15A"/>
+        <updated>2026-08-17T13:00:34.174Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>There have been no further problems, and the incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Certificates (Operational)</li>
+          </ul>]]></summary>
+        <content type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>There have been no further problems, and the incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Certificates (Operational)</li>
+          </ul>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Login attempts failing]]></title>
+        <id>https://status.tailscale.com//incidents/01KZW060M9Q4YYR4NRSCNQ3QT5</id>
+        <link href="https://status.tailscale.com//incidents/01KZW060M9Q4YYR4NRSCNQ3QT5"/>
+        <updated>2026-08-12T22:46:04.664Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Admin console (console.tailscale.com) (Operational)</li>
+          </ul>]]></summary>
+        <content type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Admin console (console.tailscale.com) (Operational)</li>
+          </ul>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Coordination server issues]]></title>
+        <id>https://status.tailscale.com//incidents/01KZ36V5QCE1FHRATGBAD2PR0N</id>
+        <link href="https://status.tailscale.com//incidents/01KZ36V5QCE1FHRATGBAD2PR0N"/>
+        <updated>2026-08-04T01:28:34.745Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Admin console (console.tailscale.com) (Operational)</li>
+<li>Coordination service (Operational)</li>
+          </ul>]]></summary>
+        <content type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Admin console (console.tailscale.com) (Operational)</li>
+<li>Coordination service (Operational)</li>
+          </ul>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Log streaming performance issues]]></title>
+        <id>https://status.tailscale.com//incidents/01KYYC8SM60PNEBG4WWTP3DG2Y</id>
+        <link href="https://status.tailscale.com//incidents/01KYYC8SM60PNEBG4WWTP3DG2Y"/>
+        <updated>2026-08-03T21:29:10.225Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.]]></summary>
+        <content type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Certificate creation issues]]></title>
+        <id>https://status.tailscale.com//incidents/01KZ3CF6SZ9A893D48CVST981A</id>
+        <link href="https://status.tailscale.com//incidents/01KZ3CF6SZ9A893D48CVST981A"/>
+        <updated>2026-08-03T16:24:12.730Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Certificates (Operational)</li>
+<li>Funnel (Operational)</li>
+          </ul>]]></summary>
+        <content type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Certificates (Operational)</li>
+<li>Funnel (Operational)</li>
+          </ul>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Some users are experiencing Error 500 messages when trying to sign in]]></title>
+        <id>https://status.tailscale.com//incidents/01KYWJVV8HZ0QDADETPRYDKBF7</id>
+        <link href="https://status.tailscale.com//incidents/01KYWJVV8HZ0QDADETPRYDKBF7"/>
+        <updated>2026-07-31T17:44:56.819Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Admin console (console.tailscale.com) (Operational)</li>
+<li>Coordination service (Operational)</li>
+          </ul>]]></summary>
+        <content type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Admin console (console.tailscale.com) (Operational)</li>
+<li>Coordination service (Operational)</li>
+          </ul>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Aperture is unavailable for self-serve users]]></title>
+        <id>https://status.tailscale.com//incidents/01KYCEJ5BY38G164CPWTB457D9</id>
+        <link href="https://status.tailscale.com//incidents/01KYCEJ5BY38G164CPWTB457D9"/>
+        <updated>2026-07-25T12:34:15.591Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.]]></summary>
+        <content type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Service advertisement issues]]></title>
+        <id>https://status.tailscale.com//incidents/01KY5VBQ66VMFCDPZTP5RR0S24</id>
+        <link href="https://status.tailscale.com//incidents/01KY5VBQ66VMFCDPZTP5RR0S24"/>
+        <updated>2026-07-22T22:20:38.953Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Admin console (console.tailscale.com) (Operational)</li>
+          </ul>]]></summary>
+        <content type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Admin console (console.tailscale.com) (Operational)</li>
+          </ul>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Control D Integration Issues]]></title>
+        <id>https://status.tailscale.com//incidents/01KY2EMVNWGPXEH8C3K8W50H5N</id>
+        <link href="https://status.tailscale.com//incidents/01KY2EMVNWGPXEH8C3K8W50H5N"/>
+        <updated>2026-07-21T16:24:11.385Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Coordination service (Operational)</li>
+          </ul>]]></summary>
+        <content type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Coordination service (Operational)</li>
+          </ul>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Login Attempts Failing]]></title>
+        <id>https://status.tailscale.com//incidents/01KY0TBGTJEDZ5VB7W6G0BDNM8</id>
+        <link href="https://status.tailscale.com//incidents/01KY0TBGTJEDZ5VB7W6G0BDNM8"/>
+        <updated>2026-07-20T22:49:01.607Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Admin console (console.tailscale.com) (Operational)</li>
+          </ul>]]></summary>
+        <content type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Admin console (console.tailscale.com) (Operational)</li>
+          </ul>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Coordination server issues]]></title>
+        <id>https://status.tailscale.com//incidents/01KXNNVBH1MRP0FHE9FBN3HZPT</id>
+        <link href="https://status.tailscale.com//incidents/01KXNNVBH1MRP0FHE9FBN3HZPT"/>
+        <updated>2026-07-16T18:43:15.737Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Coordination service (Operational)</li>
+          </ul>]]></summary>
+        <content type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Coordination service (Operational)</li>
+          </ul>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Admin console and pkgs.tailscale.com are unavailable]]></title>
+        <id>https://status.tailscale.com//incidents/01KXMZTFBM5B5EW9TWMTPF3M6F</id>
+        <link href="https://status.tailscale.com//incidents/01KXMZTFBM5B5EW9TWMTPF3M6F"/>
+        <updated>2026-07-16T13:04:54.550Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Package server (pkgs.tailscale.com) (Operational)</li>
+<li>Admin console (console.tailscale.com) (Operational)</li>
+          </ul>]]></summary>
+        <content type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Package server (pkgs.tailscale.com) (Operational)</li>
+<li>Admin console (console.tailscale.com) (Operational)</li>
+          </ul>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Billing page in the admin console unexpectedly refreshing]]></title>
+        <id>https://status.tailscale.com//incidents/01KXFWNZRM3RP5CQSG9KDN56CE</id>
+        <link href="https://status.tailscale.com//incidents/01KXFWNZRM3RP5CQSG9KDN56CE"/>
+        <updated>2026-07-14T12:44:11.983Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Admin console (console.tailscale.com) (Operational)</li>
+          </ul>]]></summary>
+        <content type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Admin console (console.tailscale.com) (Operational)</li>
+          </ul>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Coordination server issues]]></title>
+        <id>https://status.tailscale.com//incidents/01KX0J645RKNJB2800PMXNREHV</id>
+        <link href="https://status.tailscale.com//incidents/01KX0J645RKNJB2800PMXNREHV"/>
+        <updated>2026-07-08T10:26:40.000Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved. The authentication failures were due to a service becoming unreachable, and we have worked to restore the service. Approximately 1 in 10 requests between 08:40 and 10:00 UTC were affected, and the issue in this period was intermittent.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Admin console (console.tailscale.com) (Operational)</li>
+          </ul>]]></summary>
+        <content type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved. The authentication failures were due to a service becoming unreachable, and we have worked to restore the service. Approximately 1 in 10 requests between 08:40 and 10:00 UTC were affected, and the issue in this period was intermittent.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Admin console (console.tailscale.com) (Operational)</li>
+          </ul>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Issue with approving devices]]></title>
+        <id>https://status.tailscale.com//incidents/01KWF68FNFD7CE54NM0SXM8W9X</id>
+        <link href="https://status.tailscale.com//incidents/01KWF68FNFD7CE54NM0SXM8W9X"/>
+        <updated>2026-07-01T17:38:11.142Z</updated>
+        <summary type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Admin console (console.tailscale.com) (Operational)</li>
+          </ul>]]></summary>
+        <content type="html"><![CDATA[<b>Status: Resolved</b><br/><br/>This incident has been resolved.<br/><br/><b>Affected components</b>
+          <ul>
+          <li>Admin console (console.tailscale.com) (Operational)</li>
+          </ul>]]></content>
+    </entry>
+</feed>

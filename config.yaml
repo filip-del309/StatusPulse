@@ -8,7 +8,7 @@ sources:
     enabled: true
     schedule:
       type: interval
-      interval: 30
+      interval: 600
     filters:
       required_matches: 1
       components:
