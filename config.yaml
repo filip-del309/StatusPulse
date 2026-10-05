@@ -1,0 +1,85 @@
+telegram:
+  bot_token: ${TELEGRAM_BOT_TOKEN}
+  chat_id: ${TELEGRAM_CHAT_ID}
+
+sources:
+
+  tailscale:
+    enabled: true
+    schedule:
+      type: interval
+      interval: 30
+    filters:
+      required_matches: 1
+      components:
+        enabled: true
+        values:
+          - Coordination service
+          - DERP
+    message:
+      title: true
+      status: true
+      components: true
+      updated_at: true
+      link: true
+
+  cloudflare:
+    enabled: true
+    schedule:
+      type: interval
+      interval: 600
+
+  scaleway:
+    enabled: true
+    schedule:
+      type: interval
+      interval: 600
+
+  artifacthub:
+    enabled: true
+    schedule:
+      type: cron
+      cron: "0 7 * * 1"
+      timezone: Europe/Warsaw
+    lookback_hours: 168
+    packages:
+      - grafana/alloy
+      - argo/argo-cd
+      - argo/argo-events
+      - argo/argo-workflows
+      - argo/argocd-image-updater
+      - atlantis/atlantis
+      - aws/aws-load-balancer-controller
+      - backstage/backstage
+      - bytebase/bytebase
+      - cert-manager/cert-manager
+      - external-dns/external-dns
+      - external-secrets-operator/external-secrets
+      - forgejo-helm/forgejo
+      - grafana-community/grafana
+      - grafana-community/grafana-mcp
+      - grafana/grafana-operator
+      - m0nsterrr-homepage/homepage
+      - ingress-nginx/ingress-nginx
+      - kafka-ui/kafka-ui
+      - cloudpirates-keycloak/keycloak
+      - prometheus-community/kube-prometheus-stack
+      - librechat/librechat
+      - litellm/litellm-helm
+      - grafana-community/loki
+      - longhorn/longhorn
+      - metrics-server/metrics-server
+      - nextcloud/nextcloud
+      - oauth2-proxy/oauth2-proxy
+      - openebs/openebs
+      - ory/hydra
+      - ory/kratos
+      - portainer/portainer
+      - prefect/prefect-server
+      - prefect/prefect-worker
+      - redpanda-data/console
+      - stakater/reloader
+      - tailscale/tailscale-operator
+      - valkey/valkey
+      - vmware-tanzu/velero
+      - zabbix-community/zabbix
