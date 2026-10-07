@@ -40,7 +40,7 @@ class CloudflareSource(Source):
 
         if self.last_updated_at is None:
             # self.last_updated_at = latest_updated_at
-            self.last_updated_at = self.parse_date("2026-10-05T11:23:33.000Z")
+            self.last_updated_at = self.parse_date("2026-10-06T11:23:33.000Z")
             logger.info("Cloudflare: initialized last_updated_at=%s", latest_updated_at.isoformat())
 
             return
@@ -60,6 +60,25 @@ class CloudflareSource(Source):
 
             status = incident.get("status", "")
 
+            if not self.matches_filters(incident):
+                logger.info("Cloudflare incident filtered out: %s", incident.get("name", "Unknown incident"))
+                continue
+
+            if status == "resolved":
+                new_incidents.append(incident)
+                continue
+
+            if self.component_filter_is_decisive(incident):
+                if not self.has_new_matching_component(incident):
+                    logger.info(
+                        "Cloudflare incident has no new matching component: %s",
+                        incident.get("name", "Unknown incident"),
+                    )
+                    continue
+
+                new_incidents.append(incident)
+                continue
+
             created_at_string = incident.get("created_at")
 
             if not created_at_string:
@@ -67,11 +86,7 @@ class CloudflareSource(Source):
 
             created_at = self.parse_date(created_at_string)
 
-            if (created_at <= self.last_updated_at and status != "resolved"):
-                continue
-
-            if not self.matches_filters(incident):
-                logger.info("Cloudflare incident filtered out: %s", incident.get("name", "Unknown incident"))
+            if created_at <= self.last_updated_at:
                 continue
 
             new_incidents.append(incident)
@@ -134,24 +149,102 @@ class CloudflareSource(Source):
         required_matches = min(max(self.filters.required_matches, 1), active_filters)
         return matches >= required_matches
 
+
+    def component_filter_is_decisive(self, incident: dict) -> bool:
+        if not self.filters.components_enabled:
+            return False
+
+        if self.filters.required_matches != 1:
+            return True
+
+        if not self.filters.severity_enabled:
+            return True
+
+        severity = self.normalize(incident.get("impact", ""))
+
+        configured_severities = {self.normalize(value) for value in self.filters.severities}
+
+        severity_matches = (severity and severity in configured_severities)
+
+        return not severity_matches
+
+
+    def has_new_matching_component(self, incident: dict) -> bool:
+        configured_components = {self.normalize(value) for value in self.filters.components}
+
+        first_matching_component_at = None
+
+        updates = incident.get("incident_updates", [])
+
+        for update in reversed(updates):
+            affected_components = (update.get("affected_components") or [])
+
+            for component in affected_components:
+                name = component.get("name")
+
+                if not name:
+                    continue
+
+                component_name = (
+                    self.extract_component_name(name)
+                )
+
+                normalized_component = (
+                    self.normalize(component_name)
+                )
+
+                if normalized_component not in configured_components:
+                    continue
+
+                update_created_at_string = update.get(
+                    "created_at"
+                )
+
+                if not update_created_at_string:
+                    continue
+
+                update_created_at = self.parse_date(
+                    update_created_at_string
+                )
+
+                first_matching_component_at = (
+                    update_created_at
+                )
+
+                break
+
+            if first_matching_component_at is not None:
+                break
+
+        if first_matching_component_at is None:
+            return False
+
+        return first_matching_component_at > self.last_updated_at
+
+
     @staticmethod
     def extract_component_name(name: str,) -> str:
         """
-        Extract the component name after
-        the last ' - '.
+        Remove only the Cloudflare Sites and Services
+        prefix.
 
-        Example:
+        Examples:
 
         'Cloudflare Sites and Services - API Shield'
         -> 'API Shield'
+
+        'Cloudflare Sites and Services - Area 1 - API'
+        -> 'Area 1 - API'
         """
 
         name = name.strip()
 
-        if " - " not in name:
-            return name
+        prefix = "Cloudflare Sites and Services - "
 
-        return name.rsplit(" - ", 1)[1].strip()
+        if name.startswith(prefix):
+            return name[len(prefix):].strip()
+
+        return name
 
     @staticmethod
     def normalize(value: str) -> str:
@@ -226,7 +319,6 @@ class CloudflareSource(Source):
                     components.append(component_name)
 
         return list(dict.fromkeys(components))
-
 
     async def get_incidents(self) -> list[dict]:
         response = await self.client.get(self.URL)
