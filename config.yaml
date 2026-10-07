@@ -37,19 +37,166 @@ sources:
     enabled: true
     schedule:
       type: interval
-      interval: 600
+      interval: 30
     filters:
       required_matches: 1
       severity:
         enabled: true
         values:
-          - Major
           - Critical
+          - Major
+          # - Minor
       components:
         enabled: true
         values:
-          - API
+        # CDN & Performance
+          - CDN/Cache
+          - Always Online
+          - Cache Reserve
+          - CDN Cache Purge
+          - Cloud Connector
+          - Custom Pages
+          - Load Balancing and Monitoring
+          - Speed Optimizations
+          - Waiting Room
+          - WebSockets
+        # DNS
+          - Authoritative DNS
+          - DNS Firewall
+          - DNS Root Servers
+          - DNS Updates
+          - Recursive DNS
+          - Secondary DNS
+        # Network Services
+          - Network
+          - Argo Smart Routing
+          - Bring Your Own IP (BYOIP)
+          - Cloud Network Interconnect (CNI)
+          - Health Checks
+          - Infrastructure
+          - IP Geolocation
+          - Cloudflare Network Firewall
+          - Magic Transit
+          - Cloudflare WAN
+          - Spectrum
+          - Time Services
+        # Dashboard & API
           - Dashboard
+          - API
+          - Account Management
+          - Audit Logs
+          - Billing
+          - Notifications
+          - Subscriptions
+          - User Profiles
+        # Zone Managment
+          - Zones
+          - Zone Versioning
+        # Sites
+          - Abuse Reports
+          - Blog
+          - Community Sites
+          - Developer's Site
+          - Marketing Site
+          - Support Site
+        # SSL & TLS
+          - SSL Certificate Provisioning
+          - SSL for SaaS Provisioning
+        # Security
+          - API Shield
+          - Bot Management
+          - Brand Protection
+          - Challenge Platform
+          - Cloudforce One Reports
+          - Firewall
+          - Lists
+          - Page Shield
+          - Precursor
+          - Rules
+          - Security Center
+          - Turnstile
+          - URL Scanner
+        # AI
+          - Workers AI
+          - AI Gateway
+          - AI Search
+          - MCP Portal
+          - Replicate
+          - Vectorize
+        # Developers Services
+          - Workers
+          - Durable Objects
+          - Artifacts
+          - Browser Run
+          - Containers
+          - D1
+          - Distributed Web Gateway
+          - Ethereum Gateway
+          - Hyperdrive
+          - Snippets
+          - Pages
+          - Pipelines
+          - Queues
+          - R2
+          - R2 Data Catalog
+          - R2 SQL
+          - Randomness Beacon
+          - Workers Assets
+          - Workers Builds
+          - Workers Preview
+          - Workers KV
+          - Workflows
+          - Wrangler
+          - Workers VPC
+        # Analytics & Observability
+          - Analytics
+          - Log Explorer
+          - Logs
+          - Observatory
+          - Radar
+          - Trace
+          - Web Analytics
+          - Workers Observability
+          - Zaraz
+        # Email
+          - Email Routing
+          - Email Sending
+        # Registrar
+          - Registrar
+          - Registration Data Access Protocol (RDAP)
+        # Zero Trust
+          - Zero Trust
+          - Access
+          - Area 1 - API
+          - Area 1 - Dash
+          - Browser Isolation
+          - Cloud Access Security Broker (CASB)
+          - Cloud App Control / Kivera
+          - Cloudflare One Client
+          - Data Loss Prevention (DLP)
+          - Digital Experience Monitoring (DEX)
+          - Email Security (Area1)
+          - Email Security (Zero Trust)
+          - Gateway
+          - Cloudflare One Appliance
+          - Mesh
+          - Tunnel
+          - WARP
+          - Zero Trust Dashboard
+        # Media
+          - Image Resizing
+          - Images
+          - Stream
+        # Realtime
+          - Realtime SFU
+          - Realtime TURN Service
+          - RealtimeKit
+        # Data Localization
+          - Data Localization Suite
+          - Geo-Key Manager
+        # Cloudflare Sites and Services
+          - Keyless SSL
+
     message:
       title: true
       severity: true

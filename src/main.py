@@ -16,23 +16,13 @@ class SecretFilter(logging.Filter):
     def __init__(self, secrets: list[str]):
         super().__init__()
 
-        self.secrets = [
-            secret
-            for secret in secrets
-            if secret
-        ]
+        self.secrets = [secret for secret in secrets if secret]
 
-    def filter(
-        self,
-        record: logging.LogRecord,
-    ) -> bool:
+    def filter(self, record: logging.LogRecord) -> bool:
         message = record.getMessage()
 
         for secret in self.secrets:
-            message = message.replace(
-                secret,
-                "***REDACTED***",
-            )
+            message = message.replace(secret, "***REDACTED***")
 
         record.msg = message
         record.args = ()
@@ -40,14 +30,10 @@ class SecretFilter(logging.Filter):
         return True
 
 
-def configure_logging(
-    secrets: list[str],
-) -> None:
+def configure_logging(secrets: list[str]) -> None:
     handler = logging.StreamHandler()
 
-    handler.addFilter(
-        SecretFilter(secrets)
-    )
+    handler.addFilter(SecretFilter(secrets))
 
     logging.basicConfig(
         level=logging.INFO,
@@ -59,17 +45,12 @@ def configure_logging(
         handlers=[handler],
     )
 
-    logging.getLogger("httpx").setLevel(
-        logging.WARNING
-    )
-
+    logging.getLogger("httpx").setLevel(logging.WARNING)
 
 async def main():
     config = load_config()
 
-    configure_logging([
-        config.telegram.bot_token,
-    ])
+    configure_logging([config.telegram.bot_token])
 
     async with httpx.AsyncClient() as client:
         notifier = TelegramNotifier(
@@ -83,8 +64,8 @@ async def main():
                 TailscaleSource(
                     client=client,
                     notifier=notifier,
-                    filters=config.sources.tailscale.filters,
-                    message=config.sources.tailscale.message,
+                    filters=(config.sources.tailscale.filters),
+                    message=(config.sources.tailscale.message),
                 ),
                 config.sources.tailscale,
             ),
@@ -92,6 +73,8 @@ async def main():
                 CloudflareSource(
                     client=client,
                     notifier=notifier,
+                    filters=(config.sources.cloudflare.filters),
+                    message=(config.sources.cloudflare.message),
                 ),
                 config.sources.cloudflare,
             ),
@@ -106,16 +89,8 @@ async def main():
                 ArtifactHubSource(
                     client=client,
                     notifier=notifier,
-                    packages=(
-                        config.sources
-                        .artifacthub
-                        .packages
-                    ),
-                    lookback_hours=(
-                        config.sources
-                        .artifacthub
-                        .lookback_hours
-                    ),
+                    packages=(config.sources.artifacthub.packages),
+                    lookback_hours=(config.sources.artifacthub.lookback_hours),
                 ),
                 config.sources.artifacthub,
             ),
@@ -125,20 +100,14 @@ async def main():
 
         for source, source_config in sources:
             if not source_config.enabled:
-                logging.info(
-                    "Source '%s' is disabled",
-                    source.name,
-                )
+                logging.info("Source '%s' is disabled", source.name,)
                 continue
 
             tasks.append(
                 asyncio.create_task(
                     run_source(
                         source=source,
-                        schedule=(
-                            source_config
-                            .schedule
-                        ),
+                        schedule=(source_config.schedule)
                     )
                 )
             )
