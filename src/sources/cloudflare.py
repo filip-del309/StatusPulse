@@ -39,8 +39,8 @@ class CloudflareSource(Source):
         latest_updated_at = self.parse_date(incidents[0]["updated_at"])
 
         if self.last_updated_at is None:
-            # self.last_updated_at = latest_updated_at
-            self.last_updated_at = self.parse_date("2026-10-06T11:23:33.000Z")
+            self.last_updated_at = latest_updated_at
+            # self.last_updated_at = self.parse_date("2026-10-06T11:23:33.000Z")
             logger.info("Cloudflare: initialized last_updated_at=%s", latest_updated_at.isoformat())
 
             return
