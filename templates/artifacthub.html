@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}
+ArtifactHub — StatusPulse
+{% endblock %}
+
+{% block content %}
+
+<h1>ArtifactHub</h1>
+
+<p>
+    Helm charts monitored by StatusPulse.
+</p>
+
+{% if packages %}
+
+    {% for package in packages %}
+
+        {% set status = namespace(has_update=false) %}
+
+        {% for version in package.repository_versions.values() %}
+            {% if version != package.version %}
+                {% set status.has_update = true %}
+            {% endif %}
+        {% endfor %}
+
+        <div class="card">
+
+            <h2>
+                <a
+                    href="/status/artifacthub/{{ package.chart }}"
+                >
+                    {{ package.chart }}
+                </a>
+            </h2>
+
+            <p>
+                Latest:
+                <code>{{ package.version }}</code>
+            </p>
+
+            {% if package.is_new %}
+
+                <span class="status status-new">
+                    New release
+                </span>
+
+            {% elif status.has_update %}
+
+                <span class="status status-update">
+                    Update available
+                </span>
+
+            {% else %}
+
+                <span class="status status-ok">
+                    Up to date
+                </span>
+
+            {% endif %}
+
+        </div>
+
+    {% endfor %}
+
+{% else %}
+
+    <div class="card">
+        No ArtifactHub packages found.
+    </div>
+
+{% endif %}
+
+{% endblock %}

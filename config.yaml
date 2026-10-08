@@ -37,7 +37,7 @@ sources:
     enabled: true
     schedule:
       type: interval
-      interval: 30
+      interval: 600
     filters:
       required_matches: 1
       severity:
@@ -215,47 +215,139 @@ sources:
     enabled: true
     schedule:
       type: cron
-      cron: "0 7 * * 1"
+      cron: "0 7 * * 1" # cron: "12 20 * * *"
       timezone: Europe/Warsaw
     lookback_hours: 168
+    statuspulse_url: http://localhost:8000
+
+    repository:
+      url: https://github.com/filip-del309/test-cloud-kube-infra.git
+      branch: main
+      path: ./data/test-cloud-kube-infra
+      username: ${GITHUB_USERNAME}
+      token: ${GITHUB_TOKEN}
+
     packages:
-      - grafana/alloy
-      - argo/argo-cd
-      - argo/argo-events
-      - argo/argo-workflows
-      - argo/argocd-image-updater
-      - atlantis/atlantis
-      - aws/aws-load-balancer-controller
-      - backstage/backstage
-      - bytebase/bytebase
-      - cert-manager/cert-manager
-      - external-dns/external-dns
-      - external-secrets-operator/external-secrets
-      - forgejo-helm/forgejo
-      - grafana-community/grafana
-      - grafana-community/grafana-mcp
-      - grafana/grafana-operator
-      - m0nsterrr-homepage/homepage
-      - ingress-nginx/ingress-nginx
-      - kafka-ui/kafka-ui
-      - cloudpirates-keycloak/keycloak
-      - prometheus-community/kube-prometheus-stack
-      - librechat/librechat
-      - litellm/litellm-helm
-      - grafana-community/loki
-      - longhorn/longhorn
-      - metrics-server/metrics-server
-      - nextcloud/nextcloud
-      - oauth2-proxy/oauth2-proxy
-      - openebs/openebs
-      - ory/hydra
-      - ory/kratos
-      - portainer/portainer
-      - prefect/prefect-server
-      - prefect/prefect-worker
-      - redpanda-data/console
-      - stakater/reloader
-      - tailscale/tailscale-operator
-      - valkey/valkey
-      - vmware-tanzu/velero
-      - zabbix-community/zabbix
+      - name: grafana/alloy
+        folders:
+          - alloy
+      - name: argo/argo-cd
+        folders: 
+          - argo-cd
+      - name: argo/argo-events
+        folders: 
+          - argo-events
+      - name: argo/argo-workflows
+        folders: 
+          - argo-workflows
+      - name: argo/argocd-image-updater
+        folders: 
+          - argocd-image-updater
+      - name: atlantis/atlantis
+        folders: 
+          - atlantis
+      - name: aws/aws-load-balancer-controller
+        folders: 
+          - aws-lb-controller
+      - name: backstage/backstage
+        folders: 
+          - backstage
+      - name: bytebase/bytebase
+        folders: 
+          - bytebase
+      - name: cert-manager/cert-manager
+        folders: 
+          - cert-manager
+      - name: external-dns/external-dns
+        folders: 
+          - external-dns-cloudflare
+          - external-dns-route53
+      - name: external-secrets-operator/external-secrets
+        folders: 
+          - external-secrets
+      - name: forgejo-helm/forgejo
+        folders: 
+          - forgejo
+      - name: grafana-community/grafana
+        folders: 
+          - grafana
+      - name: grafana-community/grafana-mcp
+        folders: 
+          - grafana-mcp
+      - name: grafana/grafana-operator
+        folders: 
+          - grafana-operator
+      - name: m0nsterrr-homepage/homepage
+        folders: 
+          - homepage
+      - name: ingress-nginx/ingress-nginx
+        folders:
+          - ingress-nginx-internal
+          - ingress-nginx-external
+      - name: kafka-ui/kafka-ui
+        folders:
+          - kafka-ui
+      - name: cloudpirates-keycloak/keycloak
+        folders:
+          - keycloak
+      - name: prometheus-community/kube-prometheus-stack
+        folders:
+          - kube-prometheus-stack
+      - name: librechat/librechat
+        folders:
+          - librechat
+      - name: litellm/litellm-helm
+        folders:
+          - litellm
+      - name: grafana-community/loki
+        folders:
+          - loki
+      - name: longhorn/longhorn
+        folders:
+          - longhorn
+      - name: metrics-server/metrics-server
+        folders:
+          - metrics-server
+      - name: nextcloud/nextcloud
+        folders:
+          - nextcloud
+      - name: oauth2-proxy/oauth2-proxy
+        folders:
+          - oauth2-proxy
+      - name: openebs/openebs
+        folders:
+          - openebs
+      - name: ory/hydra
+        folders:
+          - ory-hydra
+      - name: ory/kratos
+        folders:
+          - ory-kratos
+      - name: portainer/portainer
+        folders:
+          - portainer
+      - name: prefect/prefect-server
+        folders:
+          - prefect-server
+      - name: prefect/prefect-worker
+        folders:
+          - prefect-worker
+      - name: redpanda-data/console
+        folders:
+          - redpanda-console
+      - name: stakater/reloader
+        folders:
+          - reloader
+      - name: tailscale/tailscale-operator
+        folders:
+          - tailscale-operator
+      - name: valkey/valkey
+        folders:
+          - valkey
+      - name: vmware-tanzu/velero
+        folders:
+          - velero
+      - name: zabbix-community/zabbix
+        folders:
+          - zabbix
+          - zabbix-agent

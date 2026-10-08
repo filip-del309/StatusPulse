@@ -2,3 +2,6 @@ PyYAML
 python-dotenv
 httpx
 croniter
+fastapi
+uvicorn[standard]
+Jinja2

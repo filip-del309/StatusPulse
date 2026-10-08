@@ -80,11 +80,28 @@ class ScalewayConfig:
 
 
 @dataclass
+class ArtifactHubRepositoryConfig:
+    url: str
+    branch: str
+    path: str
+    username: str
+    token: str
+
+
+@dataclass
+class ArtifactHubPackageConfig:
+    name: str
+    folders: list[str]
+
+
+@dataclass
 class ArtifactHubConfig:
     enabled: bool
     schedule: ScheduleConfig
     lookback_hours: int
-    packages: list[str]
+    packages: list[ArtifactHubPackageConfig]
+    statuspulse_url: str
+    repository: ArtifactHubRepositoryConfig
 
 
 @dataclass
@@ -201,11 +218,43 @@ def load_config() -> Config:
 
     artifacthub_data = sources_data["artifacthub"]
 
+    repository_data = artifacthub_data["repository"]
+
+    github_username_name = (
+        repository_data["username"]
+        .removeprefix("${")
+        .removesuffix("}")
+    )
+
+    github_token_name = (
+        repository_data["token"]
+        .removeprefix("${")
+        .removesuffix("}")
+    )
+
+    repository = ArtifactHubRepositoryConfig(
+        url=repository_data["url"],
+        branch=repository_data.get("branch", "main"),
+        path=repository_data["path"],
+        username=os.environ[github_username_name],
+        token=os.environ[github_token_name]
+    )
+
+    packages = [
+        ArtifactHubPackageConfig(
+            name=package["name"],
+            folders=package.get("folders", []),
+        )
+        for package in artifacthub_data.get("packages", [])
+    ]
+
     artifacthub = ArtifactHubConfig(
         enabled=artifacthub_data.get("enabled", True),
         schedule=load_schedule(artifacthub_data["schedule"]),
         lookback_hours=artifacthub_data.get("lookback_hours", 24),
-        packages=artifacthub_data.get("packages", []),
+        packages=packages,
+        statuspulse_url=artifacthub_data.get("statuspulse_url", "http://localhost:8000"),
+        repository=repository,
     )
 
     return Config(

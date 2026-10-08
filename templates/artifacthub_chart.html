@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ package.chart }} - StatusPulse
+{% endblock %}
+
+{% block content %}
+
+<p>
+    <a href="/status/artifacthub">
+        ← Back to ArtifactHub
+    </a>
+</p>
+
+<div class="card">
+
+    <h1>{{ package.chart }}</h1>
+
+    <p>
+        <strong>Helm chart:</strong>
+        <code>{{ package.version }}</code>
+    </p>
+
+    <p>
+        <strong>App version:</strong>
+        <code>{{ package.app_version or "—" }}</code>
+    </p>
+
+    <p>
+        <strong>Published:</strong>
+        {{ package.published.isoformat() }}
+    </p>
+
+</div>
+
+{% for folder, used_version in package.repository_versions.items() %}
+
+    {% set changes = package.values_diff.get(folder, []) %}
+
+    {% set added = [] %}
+    {% set changed = [] %}
+    {% set removed = [] %}
+
+    {% for change in changes %}
+
+        {% if change.type == "added" %}
+            {% set _ = added.append(change) %}
+        {% elif change.type == "changed" %}
+            {% set _ = changed.append(change) %}
+        {% elif change.type == "removed" %}
+            {% set _ = removed.append(change) %}
+        {% endif %}
+
+    {% endfor %}
+
+    <div class="card">
+
+        <h2>{{ folder }}</h2>
+
+        <p>
+            <strong>Used version:</strong>
+            <code>{{ used_version }}</code>
+        </p>
+
+        <p>
+            <strong>Latest version:</strong>
+            <code>{{ package.version }}</code>
+        </p>
+
+        {% if used_version == package.version %}
+
+            <span class="status status-ok">
+                Up to date
+            </span>
+
+            <p>
+                No update available.
+            </p>
+
+        {% else %}
+
+            <span class="status status-update">
+                Update available
+            </span>
+
+            {% if changes %}
+
+                <h3>
+                    Changes in values.yaml
+                </h3>
+
+                {% if added %}
+
+                    <h4>
+                        Added ({{ added|length }})
+                    </h4>
+
+                    {% for change in added %}
+
+                        <div class="change">
+                            <strong>
+                                {{ change.path }}
+                            </strong>
+
+                            <br>
+
+                            <code>
+                                {{ change.new }}
+                            </code>
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+                {% if changed %}
+
+                    <h4>
+                        Changed ({{ changed|length }})
+                    </h4>
+
+                    {% for change in changed %}
+
+                        <div class="change">
+                            <strong>
+                                {{ change.path }}
+                            </strong>
+
+                            <br>
+
+                            <code>
+                                {{ change.old }}
+                            </code>
+
+                            →
+
+                            <code>
+                                {{ change.new }}
+                            </code>
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+                {% if removed %}
+
+                    <h4>
+                        Removed ({{ removed|length }})
+                    </h4>
+
+                    {% for change in removed %}
+
+                        <div class="change">
+                            <strong>
+                                {{ change.path }}
+                            </strong>
+
+                            <br>
+
+                            <code>
+                                {{ change.old }}
+                            </code>
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            {% else %}
+
+                <p>
+                    No values.yaml changes found.
+                </p>
+
+            {% endif %}
+
+        {% endif %}
+
+    </div>
+
+{% endfor %}
+
+{% if not package.repository_versions %}
+
+    <div class="card">
+        <p>
+            No matching repository versions found.
+        </p>
+    </div>
+
+{% endif %}
+
+{% endblock %}
