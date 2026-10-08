@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xml:lang="en-US" xmlns="http://www.w3.org/2005/Atom">
+  <id>tag:status.scaleway.com,2005:/history</id>
+  <link rel="alternate" type="text/html" href="https://status.scaleway.com"/>
+  <link rel="self" type="application/atom+xml" href="https://status.scaleway.com/history.atom"/>
+  <title>Scaleway Status - Incident History</title>
+  <updated>2026-09-21T17:22:22+02:00</updated>
+  <author>
+    <name>Scaleway</name>
+  </author>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31390009</id>
+    <published>2026-09-23T09:00:00+02:00</published>
+    <updated>2026-09-09T16:08:07+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/7zsw23zr4p45"/>
+    <title>[FR-PAR] Scheduled maintenance of one of the core routers in the PAR region.</title>
+    <content type="html">&lt;p&gt;&lt;strong&gt;THIS IS A SCHEDULED EVENT Sep &lt;var data-var='date'&gt;23&lt;/var&gt;, &lt;var data-var='time'&gt;09:00&lt;/var&gt; - &lt;var data-var='time'&gt;12:00&lt;/var&gt; CEST&lt;/strong&gt;&lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt; 9&lt;/var&gt;, &lt;var data-var='time'&gt;16:08&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Scheduled&lt;/strong&gt; - One of the two main routers will be taken out of service.&lt;br /&gt;During this period, the network connection will not be redundant in 2 Availability Zones in Paris region: PAR1, PAR3.&lt;br /&gt;No packet loss or latency changes are expected. &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31488834</id>
+    <published>2026-09-22T14:00:00+02:00</published>
+    <updated>2026-09-21T16:29:18+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/qh788knkkwxj"/>
+    <title>Scheduled Maintenance – Web Hosting Elements</title>
+    <content type="html">&lt;p&gt;&lt;strong&gt;THIS IS A SCHEDULED EVENT Sep &lt;var data-var='date'&gt;22&lt;/var&gt;, &lt;var data-var='time'&gt;14:00&lt;/var&gt; - &lt;var data-var='time'&gt;15:00&lt;/var&gt; CEST&lt;/strong&gt;&lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;21&lt;/var&gt;, &lt;var data-var='time'&gt;16:29&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Scheduled&lt;/strong&gt; - On September 22nd, between 14:00 and 15:00, we will perform maintenance on cPanel platforms 1006, 1010 and 013. During this time, a service interruption of up to 10 minutes may occur. &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31429299</id>
+    <published>2026-09-21T11:27:18+02:00</published>
+    <updated>2026-09-21T11:27:18+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/k5g5sm1qr31j"/>
+    <title>[Support] Phone assistance is unavailable</title>
+    <content type="html">&lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;21&lt;/var&gt;, &lt;var data-var='time'&gt;11:27&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Resolved&lt;/strong&gt; - The platform is accessible again. Teams are in the process of verifying that the operation of the platform is compliant. We apologize for this interruption. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;18&lt;/var&gt;, &lt;var data-var='time'&gt;18:15&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Update&lt;/strong&gt; - We are continuing to investigate this issue. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;14&lt;/var&gt;, &lt;var data-var='time'&gt;12:49&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Investigating&lt;/strong&gt; - Due to an issue with our phone system, only ticket and live chat assistance are currently available.&lt;br /&gt;We are currently investigating the situation and will update this status as soon as we have more information. &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31485949</id>
+    <published>2026-09-20T00:30:00+02:00</published>
+    <updated>2026-09-21T09:50:18+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/h1qm7jgr864d"/>
+    <title>[DC2] RPN switch reboot in DC2/S301/D13</title>
+    <content type="html">&lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;20&lt;/var&gt;, &lt;var data-var='time'&gt;00:30&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Resolved&lt;/strong&gt; - We have detected a switch down in DC2/S301/D13 &lt;br /&gt;Servers in that rack has lost private network access.&lt;br /&gt;&lt;br /&gt;===================&lt;br /&gt;&lt;br /&gt;2026/09/20 12:37 UTC&lt;br /&gt;The issue has been resolved. &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31469131</id>
+    <published>2026-09-18T16:58:40+02:00</published>
+    <updated>2026-09-18T16:58:40+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/ns3pj4yp60rz"/>
+    <title>[WebHosting] Intermittent access to Rouncudbe Webmail on Dedibox infra</title>
+    <content type="html">&lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;18&lt;/var&gt;, &lt;var data-var='time'&gt;16:58&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Resolved&lt;/strong&gt; - This incident has been resolved. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;18&lt;/var&gt;, &lt;var data-var='time'&gt;16:29&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Investigating&lt;/strong&gt; - We are currently investigating on an issue on the webmail interface. &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31468372</id>
+    <published>2026-09-18T15:45:41+02:00</published>
+    <updated>2026-09-18T15:45:41+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/2b540f6c9zdj"/>
+    <title>san-dc2-7 unreachable</title>
+    <content type="html">&lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;18&lt;/var&gt;, &lt;var data-var='time'&gt;15:45&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Monitoring&lt;/strong&gt; - A hardware issue impacted a RPN node (dc2-7) from 17/09/26 12h11 UTC to 18/09/26 13h01. &lt;br /&gt;The service is now up for the clients using this node&lt;br /&gt;We are monitoring closely for any new issues on the node and may need another downtime if the hardware issue persist. &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31447933</id>
+    <published>2026-09-17T16:30:07+02:00</published>
+    <updated>2026-09-17T16:30:07+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/9tcxl5hcywds"/>
+    <title>[VPC] - [PAR1] - VPC infrastructure upgrade</title>
+    <content type="html">&lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;17&lt;/var&gt;, &lt;var data-var='time'&gt;16:30&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Completed&lt;/strong&gt; - The scheduled maintenance has been completed. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;17&lt;/var&gt;, &lt;var data-var='time'&gt;09:30&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;In progress&lt;/strong&gt; - Scheduled maintenance is currently in progress. We will provide updates as necessary. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;16&lt;/var&gt;, &lt;var data-var='time'&gt;14:00&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Scheduled&lt;/strong&gt; - As part of a required update to a component related to our VPC infrastructure, a maintenance has been scheduled. It will be at the hypervisor level in the fr-par-1. Availability Zones and scheduled for Thursday, September 17th, from 9:30 to 16:30 (Paris Time). During this time, a network interruption of up to one minute may occur during the day in the following cases:&lt;br /&gt;&lt;br /&gt;- Communications between Private Networks (via the vRouter)&lt;br /&gt;- Communications within the same Private Network across multiple Availability Zones&lt;br /&gt;- Communications within the same Private Network between Instances and Elastic Metal servers.&lt;br /&gt;&lt;br /&gt;We apologize for any inconvenience this maintenance may cause and remain at your disposal should you require any additional information. &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31455511</id>
+    <published>2026-09-17T09:59:32+02:00</published>
+    <updated>2026-09-17T11:13:50+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/9zwlklkxnhll"/>
+    <title>[CKPT] (fr-par) Some customers may have traces ingestion and query unavailability</title>
+    <content type="html">&lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;17&lt;/var&gt;, &lt;var data-var='time'&gt;09:59&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Resolved&lt;/strong&gt; - From Wednesday, September 16 at 18:00 CEST to Thursday, September 17 at 09:45 CEST, some of our components were unable to start after ingesting data. A small portion of customers may have missing data from this time period. &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31436699</id>
+    <published>2026-09-16T17:00:07+02:00</published>
+    <updated>2026-09-16T17:00:07+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/dpcjmhm306wd"/>
+    <title>[VPC] - [PAR1] - VPC infrastructure upgrade</title>
+    <content type="html">&lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;16&lt;/var&gt;, &lt;var data-var='time'&gt;17:00&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Completed&lt;/strong&gt; - The scheduled maintenance has been completed. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;16&lt;/var&gt;, &lt;var data-var='time'&gt;09:30&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;In progress&lt;/strong&gt; - Scheduled maintenance is currently in progress. We will provide updates as necessary. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;16&lt;/var&gt;, &lt;var data-var='time'&gt;09:30&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Scheduled&lt;/strong&gt; - As part of a required update to a component related to our VPC infrastructure, a maintenance has been scheduled. It will be at the hypervisor level in the fr-par-1. Availability Zones and scheduled for Tuesday, September 16th, from 09:30 to  16:30 (Paris Time). During this time, a network interruption of up to one minute may occur during the day in the following cases:&lt;br /&gt;&lt;br /&gt;- Communications between Private Networks (via the vRouter)&lt;br /&gt;- Communications within the same Private Network across multiple Availability Zones&lt;br /&gt;- Communications within the same Private Network between Instances and Elastic Metal servers.&lt;br /&gt;&lt;br /&gt;We apologize for any inconvenience this maintenance may cause and remain at your disposal should you require any additional information. &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31448914</id>
+    <published>2026-09-16T15:52:53+02:00</published>
+    <updated>2026-09-16T15:52:53+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/y1v9ymbcr0f5"/>
+    <title>[Instances] - not all resolvers updated with new subnet  78.232.0.0/21</title>
+    <content type="html">&lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;16&lt;/var&gt;, &lt;var data-var='time'&gt;15:52&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Resolved&lt;/strong&gt; - VMs with new subnet may have had issues with dns resolutions &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31445111</id>
+    <published>2026-09-16T09:57:12+02:00</published>
+    <updated>2026-09-16T09:57:12+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/7f4txhwpnhjv"/>
+    <title>[INSTANCE][FR-PAR-2] Outbound connectivity issues</title>
+    <content type="html">&lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;16&lt;/var&gt;, &lt;var data-var='time'&gt;09:57&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Resolved&lt;/strong&gt; - The issue has been resolved.&lt;br /&gt;If you are still experiencing issues, we invite you to create a support ticket. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;16&lt;/var&gt;, &lt;var data-var='time'&gt;09:13&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Monitoring&lt;/strong&gt; - The issue should be resolved in most destinations, our team is taking the necessary steps to ensure it works everywhere. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;16&lt;/var&gt;, &lt;var data-var='time'&gt;08:22&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Investigating&lt;/strong&gt; - We are currently investigating a network issue affecting instances with an IP address in the 78.232.0.0/21 range. Outbound traffic from these instances may fail to reach a significant part of the internet. Our teams are actively working on it and we will provide an update as soon as we have more information.&lt;br /&gt;The incident began on September 15 at 5:00 p.m. UTC+1 &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31440746</id>
+    <published>2026-09-16T08:56:59+02:00</published>
+    <updated>2026-09-16T08:56:59+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/1rydknn05nwm"/>
+    <title>[GAPI] - Dedicated deployment cannot start properly</title>
+    <content type="html">&lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;16&lt;/var&gt;, &lt;var data-var='time'&gt;08:56&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Resolved&lt;/strong&gt; - This incident has been resolved. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;15&lt;/var&gt;, &lt;var data-var='time'&gt;19:03&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Investigating&lt;/strong&gt; - [17:20]&lt;br /&gt;A network issue causes an internal component to be unreachable, preventing the dedicated deployment to start properly. &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31400043</id>
+    <published>2026-09-15T21:00:07+02:00</published>
+    <updated>2026-09-15T21:00:07+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/90j0xz5v4b6l"/>
+    <title>[All AZs Managed Redis]  Version upgrade</title>
+    <content type="html">&lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;15&lt;/var&gt;, &lt;var data-var='time'&gt;21:00&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Completed&lt;/strong&gt; - The scheduled maintenance has been completed. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;14&lt;/var&gt;, &lt;var data-var='time'&gt;09:00&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;In progress&lt;/strong&gt; - Scheduled maintenance is currently in progress. We will provide updates as necessary. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;10&lt;/var&gt;, &lt;var data-var='time'&gt;16:56&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Update&lt;/strong&gt; - We will be undergoing scheduled maintenance during this time. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;10&lt;/var&gt;, &lt;var data-var='time'&gt;16:46&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Scheduled&lt;/strong&gt; - Reason for maintenance: &lt;br /&gt;Service security, stability, and performance enhancement. Exceptionally, for security reasons, this preventative maintenance will be automatically applied to update all instances that have not manually applied the update to the latest stable version.&lt;br /&gt;&lt;br /&gt;Impact :&lt;br /&gt;During the operation, your Managed Redis instance(s) will be temporarily unavailable, meaning you will not be able to access them or perform any actions.&lt;br /&gt;&lt;br /&gt;Impact duration : &lt;br /&gt;You can expect a downtime of a few seconds for High Availability (HA) instances and clusters, and up to 1 minute for standalone instances.&lt;br /&gt;&lt;br /&gt;Maintenance window :&lt;br /&gt;Beginning : September 14th, 2026 : 0900 UTC&lt;br /&gt;End : September 15th, 2026 : 1800 UTC&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;Notes : &lt;br /&gt;&lt;br /&gt;New version available&lt;br /&gt;The new version is already seeded and can be applied at any time by calling:&lt;br /&gt;&lt;br /&gt;POST https://api.scaleway.com/redis/v1/zones/{zone}/clusters/{cluster_id}/migrate&lt;br /&gt;&lt;br /&gt;{&lt;br /&gt;  "version": "8.6.6"&lt;br /&gt;}&lt;br /&gt;&lt;br /&gt;Upon clicking on the upgrade button, the console may briefly display a message about high availability being disabled. This is no longer the case and the message can be safely ignored. &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31438814</id>
+    <published>2026-09-15T18:07:11+02:00</published>
+    <updated>2026-09-15T18:07:11+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/2z95ssv5qc52"/>
+    <title>[Serverless Containers] - [mil] - API instabilities</title>
+    <content type="html">&lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;15&lt;/var&gt;, &lt;var data-var='time'&gt;18:07&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Resolved&lt;/strong&gt; - This incident has been resolved. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;15&lt;/var&gt;, &lt;var data-var='time'&gt;15:21&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Monitoring&lt;/strong&gt; - A fix has been implemented and we are monitoring the results. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;15&lt;/var&gt;, &lt;var data-var='time'&gt;15:01&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Update&lt;/strong&gt; - We are continuing to work on a fix for this issue. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;15&lt;/var&gt;, &lt;var data-var='time'&gt;14:55&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Identified&lt;/strong&gt; - All operations on Serverless Containers resources are impacted.&lt;br /&gt;Serverless Containers already deployed are reachable. &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31436676</id>
+    <published>2026-09-15T16:30:09+02:00</published>
+    <updated>2026-09-15T16:30:09+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/3gtxbbc6zh6p"/>
+    <title>[VPC] - [PAR1] - VPC infrastructure upgrade</title>
+    <content type="html">&lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;15&lt;/var&gt;, &lt;var data-var='time'&gt;16:30&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Completed&lt;/strong&gt; - The scheduled maintenance has been completed. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;15&lt;/var&gt;, &lt;var data-var='time'&gt;13:00&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;In progress&lt;/strong&gt; - Scheduled maintenance is currently in progress. We will provide updates as necessary. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;15&lt;/var&gt;, &lt;var data-var='time'&gt;13:00&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Scheduled&lt;/strong&gt; - As part of a required update to a component related to our VPC infrastructure, a maintenance has been scheduled. It will be at the hypervisor level in the fr-par-1. Availability Zones and scheduled for Tuesday, September 15th, from 13:00 to 16:30 (Paris Time). During this time, a network interruption of up to one minute may occur during the day in the following cases:&lt;br /&gt;&lt;br /&gt;- Communications between Private Networks (via the vRouter)&lt;br /&gt;- Communications within the same Private Network across multiple Availability Zones&lt;br /&gt;- Communications within the same Private Network between Instances and Elastic Metal servers.&lt;br /&gt;&lt;br /&gt;We apologize for any inconvenience this maintenance may cause and remain at your disposal should you require any additional information. &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31439366</id>
+    <published>2026-09-15T16:26:42+02:00</published>
+    <updated>2026-09-15T16:26:42+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/g4m8pbppd8nj"/>
+    <title>[Dedibox] DC5 - room 9 - rack D31 - RPN switch down</title>
+    <content type="html">&lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;15&lt;/var&gt;, &lt;var data-var='time'&gt;16:26&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Resolved&lt;/strong&gt; - This incident has been resolved. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;15&lt;/var&gt;, &lt;var data-var='time'&gt;16:02&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Identified&lt;/strong&gt; - The RPN switch is unreachable, servers in this rack lost their RPN connectivity: sd-186972 to sd-186925 &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31439337</id>
+    <published>2026-09-15T15:59:47+02:00</published>
+    <updated>2026-09-15T16:00:24+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/5g7cxvb6s8ht"/>
+    <title>[Kafka] - [mil] - API instabilities</title>
+    <content type="html">&lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;15&lt;/var&gt;, &lt;var data-var='time'&gt;15:59&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Resolved&lt;/strong&gt; - All operations are impacted.&lt;br /&gt;Kafka already deployed is reachable. &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31430078</id>
+    <published>2026-09-15T09:00:07+02:00</published>
+    <updated>2026-09-15T09:00:07+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/6m5x9f9dy4tf"/>
+    <title>[DEDIRACK][DC1] Changes to access control during building works</title>
+    <content type="html">&lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;15&lt;/var&gt;, &lt;var data-var='time'&gt;09:00&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;In progress&lt;/strong&gt; - Scheduled maintenance is currently in progress. We will provide updates as necessary. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;14&lt;/var&gt;, &lt;var data-var='time'&gt;14:49&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Update&lt;/strong&gt; - We will be undergoing scheduled maintenance during this time. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;14&lt;/var&gt;, &lt;var data-var='time'&gt;14:48&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Update&lt;/strong&gt; - We will be undergoing scheduled maintenance during this time. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;14&lt;/var&gt;, &lt;var data-var='time'&gt;14:44&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Update&lt;/strong&gt; - We will be undergoing scheduled maintenance during this time. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;14&lt;/var&gt;, &lt;var data-var='time'&gt;14:43&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Scheduled&lt;/strong&gt; - As part of the work to replace the access control system, scheduled to take place from 15 September to 15 November, work will be carried out&lt;br /&gt;in stages on certain access doors.&lt;br /&gt;This work will include, in particular, the removal of the old readers and the installation and commissioning of the new readers.&lt;br /&gt;During this transition period, and depending on the progress of the work, it may be necessary to temporarily use two access badges&lt;br /&gt;for certain doors, in order to ensure continuity and the smooth operation of access.&lt;br /&gt;Those affected will be informed in advance should this arrangement need to be put in place.&lt;br /&gt;We thank you in advance for your understanding, patience and cooperation throughout the duration of this work. &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31431257</id>
+    <published>2026-09-14T18:29:16+02:00</published>
+    <updated>2026-09-14T18:29:16+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/70y46bh5cqg7"/>
+    <title>[WBHE] - [fr-par] - Customer websites are slow on pf-014.whm.fr-par.scw.cloud</title>
+    <content type="html">&lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;14&lt;/var&gt;, &lt;var data-var='time'&gt;18:29&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Resolved&lt;/strong&gt; - This incident has been resolved. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;14&lt;/var&gt;, &lt;var data-var='time'&gt;17:34&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Investigating&lt;/strong&gt; - Customer websites are slow on pf-014.whm.fr-par.scw.cloud due to an overload of the server. &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31401015</id>
+    <published>2026-09-14T16:30:08+02:00</published>
+    <updated>2026-09-14T16:30:08+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/6tqd1x9zhxvg"/>
+    <title>[VPC] - [PAR2/PAR3] - VPC infrastructure upgrade</title>
+    <content type="html">&lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;14&lt;/var&gt;, &lt;var data-var='time'&gt;16:30&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Completed&lt;/strong&gt; - The scheduled maintenance has been completed. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;14&lt;/var&gt;, &lt;var data-var='time'&gt;09:30&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;In progress&lt;/strong&gt; - Scheduled maintenance is currently in progress. We will provide updates as necessary. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;10&lt;/var&gt;, &lt;var data-var='time'&gt;18:46&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Scheduled&lt;/strong&gt; - As part of a required update to a component related to our VPC infrastructure, a maintenance has been scheduled. It will be at the hypervisor level in the fr-par-2 and fr-par-3 Availability Zones and scheduled for Monday, September 14th, from 09:30 to 16:30 (Paris Time). During this time, a network interruption of up to one minute may occur during the day in the following cases:&lt;br /&gt;&lt;br /&gt;- Communications between Private Networks (via the vRouter)&lt;br /&gt;- Communications within the same Private Network across multiple Availability Zones&lt;br /&gt;- Communications within the same Private Network between Instances and Elastic Metal servers.&lt;br /&gt;&lt;br /&gt;We apologize for any inconvenience this maintenance may cause and remain at your disposal should you require any additional information. &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31430236</id>
+    <published>2026-09-14T15:11:49+02:00</published>
+    <updated>2026-09-14T15:11:49+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/nh7f8s82m0yp"/>
+    <title>[Support] Delays in ticket processing</title>
+    <content type="html">&lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;14&lt;/var&gt;, &lt;var data-var='time'&gt;15:11&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Identified&lt;/strong&gt; - Processing of current tickets may take longer than usual. Our teams are currently working to restore the service as soon as possible. Thank you for your understanding. &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31428616</id>
+    <published>2026-09-14T11:09:07+02:00</published>
+    <updated>2026-09-14T11:09:07+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/vyb361tjt2dl"/>
+    <title>[PGWY] - [fr-par-1] - Public Gateay stuck in a transient state</title>
+    <content type="html">&lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;14&lt;/var&gt;, &lt;var data-var='time'&gt;11:09&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Resolved&lt;/strong&gt; - Public Gateway creation/update in fr-par-1 were stuck in a transient state. &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31406467</id>
+    <published>2026-09-11T10:57:21+02:00</published>
+    <updated>2026-09-11T10:57:21+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/3pr923v8sl4h"/>
+    <title>[NETI] - DC2/S103/A7 - Public switch reboot</title>
+    <content type="html">&lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;11&lt;/var&gt;, &lt;var data-var='time'&gt;10:57&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Resolved&lt;/strong&gt; - This incident has been resolved. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;11&lt;/var&gt;, &lt;var data-var='time'&gt;09:43&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Investigating&lt;/strong&gt; - At 3:45 am. CEST on 11/09/2026, the public switch located in DC2, room S103, rack A7, has rebooted.&lt;br /&gt;All servers attached to it have lost public connectivity for around 10 minutes. &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31353093</id>
+    <published>2026-09-10T18:00:07+02:00</published>
+    <updated>2026-09-10T18:00:07+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/dg85ffvcy4p2"/>
+    <title>[NL-AMS] nats server maintenance</title>
+    <content type="html">&lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;10&lt;/var&gt;, &lt;var data-var='time'&gt;18:00&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Completed&lt;/strong&gt; - The scheduled maintenance has been completed. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;10&lt;/var&gt;, &lt;var data-var='time'&gt;09:00&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;In progress&lt;/strong&gt; - Scheduled maintenance is currently in progress. We will provide updates as necessary. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt; 4&lt;/var&gt;, &lt;var data-var='time'&gt;16:06&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Scheduled&lt;/strong&gt; - Our product team would like to inform you that a scheduled operation will take place on our Products, Nats, Events and Topics, and Queues in nl-ams.&lt;br /&gt;The reason is a migration of a major infrastructure component.&lt;br /&gt;During the maintenance window (Thursday September 10th, 2026, from 9:00 AM to 18:00 AM CET) your service might be disconnected from nats server, it will automatically reconnect to another server.&lt;br /&gt;Impact duration:The products will remain available, but there might be a disruption of the service for some minutes. &lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>tag:status.scaleway.com,2005:Incident/31381024</id>
+    <published>2026-09-10T16:30:08+02:00</published>
+    <updated>2026-09-10T16:30:08+02:00</updated>
+    <link rel="alternate" type="text/html" href="https://status.scaleway.com/incidents/x8mrqwq8gzm6"/>
+    <title>[VPC] - [PAR2/PAR3] - VPC infrastructure upgrade</title>
+    <content type="html">&lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;10&lt;/var&gt;, &lt;var data-var='time'&gt;16:30&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Completed&lt;/strong&gt; - The scheduled maintenance has been completed. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt;10&lt;/var&gt;, &lt;var data-var='time'&gt;09:30&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;In progress&lt;/strong&gt; - Scheduled maintenance is currently in progress. We will provide updates as necessary. &lt;/p&gt; &lt;p&gt; &lt;small&gt;Sep &lt;var data-var='date'&gt; 8&lt;/var&gt;, &lt;var data-var='time'&gt;17:34&lt;/var&gt; CEST&lt;/small&gt;&lt;br&gt; &lt;strong&gt;Scheduled&lt;/strong&gt; - As part of a required update to a component related to our VPC infrastructure, a maintenance has been scheduled. It will be at the hypervisor level in the fr-par-2 and fr-par-3 Availability Zones and scheduled for Thursday, September 10th, from 09:30 to 16:30 (Paris Time). During this time, a network interruption of up to one minute may occur during the day in the following cases:&lt;br /&gt;&lt;br /&gt;- Communications between Private Networks (via the vRouter)&lt;br /&gt;- Communications within the same Private Network across multiple Availability Zones&lt;br /&gt;- Communications within the same Private Network between Instances and Elastic Metal servers.&lt;br /&gt;&lt;br /&gt;We apologize for any inconvenience this maintenance may cause and remain at your disposal should you require any additional information. &lt;/p&gt;</content>
+  </entry>
+</feed>

@@ -47,6 +47,33 @@ class TailscaleConfig:
 
 
 @dataclass
+class ScalewayFilterConfig:
+    required_matches: int
+    severity_enabled: bool
+    severities: list[str]
+    components_enabled: bool
+    components: list[str]
+
+
+@dataclass
+class ScalewayMessageConfig:
+    title: bool
+    severity: bool
+    status: bool
+    components: bool
+    updated_at: bool
+    link: bool
+
+
+@dataclass
+class ScalewayConfig:
+    enabled: bool
+    schedule: ScheduleConfig
+    filters: ScalewayFilterConfig
+    message: ScalewayMessageConfig
+
+
+@dataclass
 class CloudflareFilterConfig:
     required_matches: int
     severity_enabled: bool
@@ -71,12 +98,6 @@ class CloudflareConfig:
     schedule: ScheduleConfig
     filters: CloudflareFilterConfig
     message: CloudflareMessageConfig
-
-
-@dataclass
-class ScalewayConfig:
-    enabled: bool
-    schedule: ScheduleConfig
 
 
 @dataclass
@@ -171,6 +192,31 @@ def load_cloudflare_message(data: dict) -> CloudflareMessageConfig:
     )
 
 
+def load_scaleway_filters(data: dict) -> ScalewayFilterConfig:
+    severity_data = data.get("severity", {})
+    components_data = data.get("components", {})
+    required_matches = data.get("required_matches", 1)
+
+    return ScalewayFilterConfig(
+        required_matches=required_matches,
+        severity_enabled=severity_data.get("enabled", False),
+        severities=severity_data.get("values", []),
+        components_enabled=components_data.get("enabled", False),
+        components=components_data.get("values", []),
+    )
+
+
+def load_scaleway_message(data: dict) -> ScalewayMessageConfig:
+    return ScalewayMessageConfig(
+        title=data.get("title", True),
+        severity=data.get("severity", True),
+        status=data.get("status", True),
+        components=data.get("components", True),
+        updated_at=data.get("updated_at", True),
+        link=data.get("link", True),
+    )
+
+
 def load_config() -> Config:
     config_path = Path(os.getenv("CONFIG_PATH", Path(__file__).parent.parent / "config.yaml"))
 
@@ -213,6 +259,18 @@ def load_config() -> Config:
         ),
         schedule=load_schedule(
             scaleway_data["schedule"],
+        ),
+        filters=load_scaleway_filters(
+            scaleway_data.get(
+                "filters",
+                {},
+            ),
+        ),
+        message=load_scaleway_message(
+            scaleway_data.get(
+                "message",
+                {},
+            ),
         ),
     )
 

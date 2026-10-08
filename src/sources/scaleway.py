@@ -2,6 +2,7 @@ import logging
 import re
 from datetime import datetime
 from html import escape
+from html.parser import HTMLParser
 from zoneinfo import ZoneInfo
 import xml.etree.ElementTree as ET
 
@@ -14,21 +15,81 @@ from sources.base import Source
 logger = logging.getLogger(__name__)
 
 
+class ScalewayIncidentParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+
+        self.severity = None
+        self.components_text = ""
+
+        self._inside_components = False
+
+    def handle_starttag(
+        self,
+        tag: str,
+        attrs,
+    ):
+        attributes = dict(attrs)
+
+        classes = attributes.get(
+            "class",
+            "",
+        ).split()
+
+        if (
+            tag == "h1"
+            and "incident-name" in classes
+        ):
+            for class_name in classes:
+                if class_name.startswith("impact-"):
+                    self.severity = (
+                        class_name
+                        .removeprefix("impact-")
+                        .capitalize()
+                    )
+
+        if (
+            tag == "div"
+            and "components-affected" in classes
+        ):
+            self._inside_components = True
+
+    def handle_data(
+        self,
+        data: str,
+    ):
+        if self._inside_components:
+            self.components_text += data
+
+    def handle_endtag(
+        self,
+        tag: str,
+    ):
+        if (
+            tag == "div"
+            and self._inside_components
+        ):
+            self._inside_components = False
+
+
 class ScalewaySource(Source):
     URL = "https://status.scaleway.com/history.atom"
 
-    NS = {
-        "atom": "http://www.w3.org/2005/Atom",
-    }
+    NS = {"atom": "http://www.w3.org/2005/Atom"}
 
     def __init__(
         self,
         client: httpx.AsyncClient,
         notifier: Notifier,
+        filters,
+        message,
     ):
         self.client = client
         self.notifier = notifier
+        self.filters = filters
+        self.message = message
         self.last_updated_at: datetime | None = None
+        
 
     @property
     def name(self) -> str:
@@ -117,7 +178,13 @@ class ScalewaySource(Source):
                 else "unknown"
             )
 
-            link = escape(link)
+            if link == "unknown":
+                logger.info(
+                    "Scaleway: no incident link found: %s",
+                    title,
+                )
+
+                continue
 
             content = incident.findtext(
                 "atom:content",
@@ -153,43 +220,44 @@ class ScalewaySource(Source):
                 )
                 continue
 
+            severity, components = (
+                await self.get_incident_details(
+                    link
+                )
+            )
+
+            logger.info(
+                "Scaleway incident details: "
+                "severity=%s, components=%s",
+                severity,
+                components,
+            )
+
+            if not self.matches_filters(
+                severity,
+                components,
+            ):
+                logger.info(
+                    "Scaleway: skipping incident '%s' "
+                    "because it does not match filters",
+                    title,
+                )
+                continue
+
             status = escape(last_status)
 
             formatted_updated_at = self.format_date(
                 updated_at_string
             )
 
-            message = (
-                f"- <b>Message:</b> {title}\n"
-                f"- <b>Status:</b> {status}\n"
-                f"- <b>Incident update:</b> "
-                f"{formatted_updated_at}\n"
+            message = self.build_message(
+                title=title,
+                status=status,
+                severity=severity,
+                components=components,
+                updated_at=formatted_updated_at,
+                link=link,
             )
-
-            message += (
-                f"- <b>Link:</b> {link}\n"
-            )
-
-            if status.lower() in (
-                "resolved",
-                "completed",
-            ):
-                message = (
-                    "✅ <b>Scaleway Incident:</b>\n\n"
-                    + message
-                )
-            elif status.lower() in (
-                "scheduled",
-            ):
-                message = (
-                    "📅 <b>Scaleway Scheduled Maintenance:</b>\n\n"
-                    + message
-                )
-            else:
-                message = (
-                    "🚨 <b>Scaleway Incident:</b>\n\n"
-                    + message
-                )
 
             await self.notifier.send(message)
 
@@ -235,6 +303,72 @@ class ScalewaySource(Source):
 
         return incidents
 
+    async def get_incident_details(
+        self,
+        link: str,
+    ) -> tuple[str | None, list[str]]:
+        response = await self.client.get(
+            link
+        )
+
+        response.raise_for_status()
+
+        parser = ScalewayIncidentParser()
+
+        parser.feed(
+            response.text
+        )
+
+        components = self.parse_components(
+            parser.components_text
+        )
+
+        return (
+            parser.severity,
+            components,
+        )
+
+    @staticmethod
+    def parse_components(
+        components_text: str,
+    ) -> list[str]:
+        components = []
+
+        matches = re.findall(
+            r"([^()]+?)\s*\(([^()]*)\)",
+            components_text,
+        )
+
+        for category, values in matches:
+            category = category.strip()
+
+            prefixes = [
+                "This incident affects:",
+                "This incident affected:",
+                "This scheduled maintenance affected:",
+            ]
+
+            for prefix in prefixes:
+                if prefix in category:
+                    category = category.split(
+                        prefix,
+                        1,
+                    )[1].strip()
+
+                    break
+
+            for value in values.split(","):
+                value = value.strip()
+
+                if not value:
+                    continue
+
+                components.append(
+                    f"{category} - {value}"
+                )
+
+        return components
+
     @staticmethod
     def parse_date(
         date_string: str,
@@ -244,11 +378,23 @@ class ScalewaySource(Source):
         )
 
     @staticmethod
-    def parse_latest_update(content: str) -> list[str]:
-        statuses = re.findall(r"<strong\b[^>]*>\s*(.*?)\s*</strong>", content, re.DOTALL | re.IGNORECASE)
+    def parse_latest_update(
+        content: str,
+    ) -> list[str]:
+        statuses = re.findall(
+            r"<strong\b[^>]*>\s*(.*?)\s*</strong>",
+            content,
+            re.DOTALL | re.IGNORECASE,
+        )
 
-        return [re.sub(r"\s+", " ", status).strip() for status in statuses]
-
+        return [
+            re.sub(
+                r"\s+",
+                " ",
+                status,
+            ).strip()
+            for status in statuses
+        ]
 
     @staticmethod
     def format_date(
@@ -265,3 +411,99 @@ class ScalewaySource(Source):
         return date.strftime(
             "%a, %d %b %Y, %H:%M:%S %Z"
         )
+
+    def matches_filters(self, severity: str | None, components: list[str]) -> bool:
+        matches = 0
+        enabled_filters = 0
+
+        if self.filters.severity_enabled:
+            enabled_filters += 1
+
+            if (
+                severity is not None
+                and severity in self.filters.severities
+            ):
+                matches += 1
+
+        if self.filters.components_enabled:
+            enabled_filters += 1
+
+            if any(
+                component in self.filters.components
+                for component in components
+            ):
+                matches += 1
+
+        if enabled_filters == 0:
+            return True
+
+        return matches >= self.filters.required_matches
+
+    def build_message(
+        self,
+        title: str,
+        status: str,
+        severity: str | None,
+        components: list[str],
+        updated_at: str,
+        link: str,
+    ) -> str:
+        message_parts = []
+
+        if self.message.title:
+            message_parts.append(
+                f"- <b>Message:</b> {title}"
+            )
+
+        if self.message.status:
+            message_parts.append(
+                f"- <b>Status:</b> {status}"
+            )
+
+        if self.message.severity:
+            message_parts.append(
+                f"- <b>Severity:</b> "
+                f"{escape(severity or 'unknown')}"
+            )
+
+        if self.message.components:
+            message_parts.append(
+                f"- <b>Components:</b> "
+                f"{escape(', '.join(components) or 'unknown')}"
+            )
+
+        if self.message.updated_at:
+            message_parts.append(
+                f"- <b>Incident update:</b> "
+                f"{updated_at}"
+            )
+
+        if self.message.link:
+            message_parts.append(
+                f"- <b>Link:</b> {escape(link)}"
+            )
+
+        message = "\n".join(message_parts)
+
+        if status.lower() in (
+            "resolved",
+            "completed",
+        ):
+            message = (
+                "✅ <b>Scaleway Incident:</b>\n\n"
+                + message
+            )
+        elif status.lower() in (
+            "scheduled",
+        ):
+            message = (
+                "📅 <b>Scaleway Scheduled Maintenance:</b>\n\n"
+                + message
+            )
+        else:
+            message = (
+                "🚨 <b>Scaleway Incident:</b>\n\n"
+                + message
+            )
+
+        return message

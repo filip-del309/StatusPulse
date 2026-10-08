@@ -118,6 +118,8 @@ async def main():
                 ScalewaySource(
                     client=client,
                     notifier=notifier,
+                    filters=(config.sources.scaleway.filters),
+                    message=(config.sources.scaleway.message),
                 ),
                 config.sources.scaleway,
             ),

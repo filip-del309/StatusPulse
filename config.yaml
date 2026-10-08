@@ -210,6 +210,102 @@ sources:
     schedule:
       type: interval
       interval: 600
+    filters:
+      required_matches: 2
+      severity:
+        enabled: true
+        values:
+          - Maintenance
+          - Major
+          - Minor
+      components:
+        enabled: true
+        values:
+        #  Elements - Products 
+          - Elements - Products - Account
+          - Elements - Products - APIs
+          - Elements - Products - Apple Silicon 
+          - Elements - Products - Audit Trail 
+          - Elements - Products - Billing
+          - Elements - Products - Block Storage
+          - Elements - Products - Cockpit
+          - Elements - Products - Container Registry 
+          - Elements - Products - Data Warehouse 
+          - Elements - Products - Databases
+          - Elements - Products - Developer Tools 
+          - Elements - Products - Domains
+          - Elements - Products - Edge service
+          - Elements - Products - Elastic Metal
+          - Elements - Products - Elements Console
+          - Elements - Products - Environmental Footprint
+          - Elements - Products - File Storage
+          - Elements - Products - Generative API
+          - Elements - Products - IAM
+          - Elements - Products - Instances
+          - Elements - Products - IoT Hub 
+          - Elements - Products - Jobs
+          - Elements - Products - Kafka
+          - Elements - Products - Kubernetes Kapsule 
+          - Elements - Products - Load Balancer
+          - Elements - Products - Managed Inference
+          - Elements - Products - Messaging and Queuing
+          - Elements - Products - Network
+          - Elements - Products - Object Storage 
+          - Elements - Products - Observability
+          - Elements - Products - Public Gateway 
+          - Elements - Products - Secret Manager 
+          - Elements - Products - Serverless Container 
+          - Elements - Products - Serverless Functions 
+          - Elements - Products - Serverless-Database 
+          - Elements - Products - Transactional Email 
+          - Elements - Products - VPC
+          - Elements - Products - Web Hosting 
+          - Elements - Products - Website
+          - Elements - Products - Clusters for Apache Spark™
+        #  Elements - AZ 
+          - Elements - AZ - fr-par-1 
+          - Elements - AZ - fr-par-2
+          - Elements - AZ - fr-par-3
+          - Elements - AZ - nl-ams-1 
+          - Elements - AZ - nl-ams-2
+          - Elements - AZ - nl-ams-3
+          - Elements - AZ - pl-waw-1 
+          - Elements - AZ - pl-waw-2
+          - Elements - AZ - pl-waw-3
+          - Elements - AZ - it-mil-1 
+        #  Dedibox - Products 
+          - Dedibox - Products - Dedibox 
+          - Dedibox - Products - Hosting
+          - Dedibox - Products - SAN
+          - Dedibox - Products - Dedirack
+          - Dedibox - Products - Dedibackup
+          - Dedibox - Products - Domains
+          - Dedibox - Products - RPN
+          - Dedibox - Products - Dedibox Console 
+          - Dedibox - Products - Dedibox VPS 
+        #  Dedibox - Datacenters 
+          - Dedibox - Datacenters - DC1
+          - Dedibox - Datacenters - DC2
+          - Dedibox - Datacenters - DC3
+          - Dedibox - Datacenters - DC4
+          - Dedibox - Datacenters - DC5
+          - Dedibox - Datacenters - AMS
+        #  Miscellaneous 
+          - Miscellaneous - Excellence
+          - Miscellaneous - BookMyName
+        #  Saagie - Products 
+          - Saagie - Products - Product-1-ACO 
+          - Saagie - Products - Product-2-BOU 
+          - Saagie - Products - Product-3-BV 
+          - Saagie - Products - Product-6-SIPDEV 
+          - Saagie - Products - Product-7-SIPINT 
+    message:
+      title: true
+      severity: true
+      status: true
+      components: true
+      updated_at: true
+      link: true
 
   artifacthub:
     enabled: true
