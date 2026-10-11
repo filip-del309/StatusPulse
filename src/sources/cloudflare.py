@@ -4,6 +4,7 @@ from zoneinfo import ZoneInfo
 
 import httpx
 
+from api import set_active_alert, remove_active_alert
 from config import (CloudflareFilterConfig, CloudflareMessageConfig)
 from notifications.base import Notifier
 from sources.base import Source
@@ -31,6 +32,8 @@ class CloudflareSource(Source):
         logger.info("Checking Cloudflare...")
 
         incidents = await self.get_incidents()
+
+        await self.sync_active_alerts(incidents)
 
         if not incidents:
             logger.info("Cloudflare: no incidents")
@@ -337,3 +340,73 @@ class CloudflareSource(Source):
         date = date.astimezone(ZoneInfo("Europe/Warsaw"))
 
         return date.strftime("%a, %d %b %Y, %H:%M:%S %Z")
+
+    async def sync_active_alerts(
+        self,
+        incidents: list[dict] | None = None,
+    ) -> None:
+        logger.info("Cloudflare: syncing active alerts")
+
+        if incidents is None:
+            incidents = await self.get_incidents()
+
+        active_ids = set()
+
+        resolved_statuses = {
+            "resolved",
+            "completed",
+            "canceled",
+        }
+
+        for incident in incidents:
+            incident_id = incident.get("id")
+
+            if not incident_id:
+                continue
+
+            status = incident.get("status", "").lower()
+
+            if status in resolved_statuses:
+                remove_active_alert(self.name, incident_id)
+                continue
+
+            if not self.matches_filters(incident):
+                remove_active_alert(self.name, incident_id)
+                continue
+
+            created_at = incident.get("created_at", "")
+            updated_at = incident.get("updated_at", "")
+
+            try:
+                formatted_updated_at = (
+                    self.format_date(updated_at)
+                    if updated_at
+                    else self.format_date(created_at)
+                    if created_at
+                    else ""
+                )
+            except (ValueError, TypeError):
+                logger.warning(
+                    "Cloudflare: invalid date for incident %s",
+                    incident_id,
+                )
+                formatted_updated_at = updated_at or created_at
+
+            alert = {
+                "id": incident_id,
+                "source": "Cloudflare",
+                "title": incident.get("name", "Unknown incident"),
+                "status": status.capitalize() if status else "Unknown",
+                "severity": incident.get("impact", "").capitalize(),
+                "components": self.get_components(incident),
+                "updated_at": formatted_updated_at,
+                "url": incident.get("shortlink", ""),
+            }
+
+            set_active_alert(self.name, alert)
+            active_ids.add(incident_id)
+
+        logger.info(
+            "Cloudflare: active alerts synced (%d active)",
+            len(active_ids),
+        )

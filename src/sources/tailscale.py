@@ -4,6 +4,7 @@ from datetime import datetime
 from email.utils import parsedate_to_datetime
 from html import escape
 from zoneinfo import ZoneInfo
+from api import set_active_alert, remove_active_alert
 
 import httpx
 import xml.etree.ElementTree as ET
@@ -37,6 +38,8 @@ class TailscaleSource(Source):
         logger.info("Checking Tailscale...")
 
         incidents = await self.get_incidents()
+
+        await self.sync_active_alerts(incidents)
 
         if not incidents:
             logger.info("Tailscale: no incidents")
@@ -212,4 +215,97 @@ class TailscaleSource(Source):
 
         return date.strftime("%a, %d %b %Y, %H:%M:%S %Z")
 
+    async def sync_active_alerts(
+        self,
+        incidents: list[ET.Element] | None = None,
+    ) -> None:
+        logger.info("Tailscale: syncing active alerts")
 
+        if incidents is None:
+            incidents = await self.get_incidents()
+
+        active_statuses = {
+            "investigating",
+            "identified",
+            "monitoring",
+            "in progress",
+            "unknown",
+        }
+
+        resolved_statuses = {
+            "resolved",
+            "complete",
+            "completed",
+            "closed",
+            "cancelled",
+            "canceled",
+        }
+
+        active_count = 0
+
+        for incident in incidents:
+            title = incident.findtext("title", "Unknown incident")
+            link = incident.findtext("link", "").strip()
+            description = incident.findtext("description", "")
+            pub_date = incident.findtext("pubDate", "")
+
+            if not link:
+                logger.warning(
+                    "Tailscale: skipping incident without link: %s",
+                    title,
+                )
+                continue
+
+            status = self.parse_status(description).strip()
+            status_normalized = status.lower()
+            components = self.parse_components(description)
+
+            # Usuwamy incydenty, które nie są już aktywne.
+            if status_normalized in resolved_statuses:
+                remove_active_alert(self.name, link)
+                continue
+
+            # Nie pokazujemy alertów, które nie przechodzą filtrów.
+            if not self.matches_filters(components):
+                remove_active_alert(self.name, link)
+                continue
+
+            # Nieznany status traktujemy jako aktywny, żeby nie zgubić
+            # incydentu, którego statusu nie udało się rozpoznać.
+            if status_normalized not in active_statuses:
+                logger.debug(
+                    "Tailscale: unrecognized status %r for %s; keeping as active",
+                    status,
+                    title,
+                )
+
+            updated_at = ""
+            if pub_date:
+                try:
+                    updated_at = self.format_date(pub_date)
+                except (TypeError, ValueError, OverflowError):
+                    logger.warning(
+                        "Tailscale: could not parse date for incident %s",
+                        title,
+                    )
+
+            set_active_alert(
+                self.name,
+                {
+                    "id": link,
+                    "source": "Tailscale",
+                    "title": title,
+                    "status": status.capitalize() if status else "Unknown",
+                    "severity": "Unknown",
+                    "components": components,
+                    "updated_at": updated_at,
+                    "url": link,
+                },
+            )
+
+            active_count += 1
+
+        logger.info(
+            "Tailscale: active alerts synced (%d active)",
+            active_count,
+        )

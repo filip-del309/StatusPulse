@@ -53,8 +53,8 @@ class ArtifactHubSource(Source):
 
         updates = []
 
-        for package in self.packages:
-            package_data = repository_data.get(package.name,{})
+        for index, package in enumerate(self.packages):
+            package_data = repository_data.get(package.name, {})
 
             result = await self.get_package(
                 package,
@@ -62,17 +62,18 @@ class ArtifactHubSource(Source):
                 cutoff,
             )
 
-            if result is None:
-                continue
+            if result:
+                updates.extend(result)
 
-            updates.extend(result)
+            if index < len(self.packages) - 1:
+                await asyncio.sleep(1)
 
         if not updates:
             logger.info("ArtifactHub: no updates found")
             return
 
         statuspulse_url = (
-            f"{self.statuspulse_url}/status/artifacthub"
+            f"{self.statuspulse_url}/artifacthub"
         )
 
         message = (
@@ -82,7 +83,7 @@ class ArtifactHubSource(Source):
 
         message += "\n".join(updates)
 
-        await self.notifier.send(message)
+        # await self.notifier.send(message)
 
         logger.info(
             "ArtifactHub alert sent to Telegram"

@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}
+Active Alerts | StatusPulse
+{% endblock %}
+
+{% block content %}
+
+<h1>Active Alerts</h1>
+
+<p class="page-description">
+    Currently active incidents matching your configured filters.
+</p>
+
+{% if alerts %}
+
+    {% for alert in alerts %}
+
+    <article class="card">
+
+        <h2 class="alert-title">
+            {{ alert.title }}
+        </h2>
+
+        <div class="alert-meta">
+
+            <div>
+                <strong>Source:</strong>
+                {{ alert.source }}
+            </div>
+
+            {% if alert.severity and alert.severity | lower != "unknown" %}
+            <div>
+                <strong>Severity:</strong>
+                {{ alert.severity }}
+            </div>
+            {% endif %}
+
+            {% if alert.status %}
+            <div>
+                <strong>Status:</strong>
+                {{ alert.status }}
+            </div>
+            {% endif %}
+
+            {% if alert.components %}
+            <div>
+                <strong>Components:</strong>
+                {{ alert.components | join(", ") }}
+            </div>
+            {% endif %}
+
+            {% if alert.updated_at %}
+            <div>
+                <strong>Last update:</strong>
+                {{ alert.updated_at }}
+            </div>
+            {% endif %}
+
+        </div>
+
+        {% if alert.url %}
+        <a
+            class="alert-link"
+            href="{{ alert.url }}"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            View official incident ↗
+        </a>
+        {% endif %}
+
+    </article>
+
+    {% endfor %}
+
+{% else %}
+
+    <div class="card empty-state">
+        <h2>No active alerts</h2>
+
+        <p>
+            There are currently no active alerts matching your filters.
+        </p>
+    </div>
+
+{% endif %}
+
+{% endblock %}

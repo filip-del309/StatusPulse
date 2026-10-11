@@ -32,15 +32,48 @@
             padding: 20px 32px;
         }
 
+        .header-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
         header a {
             color: white;
             text-decoration: none;
+        }
+
+        .brand {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #d1d5db;
+            font-size: 14px;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: white;
         }
 
         main {
             max-width: 1100px;
             margin: 40px auto;
             padding: 0 20px;
+            min-height: 60vh;
         }
 
         .card {
@@ -103,11 +136,96 @@
             border-bottom: none;
         }
 
+        .page-description {
+            color: #6b7280;
+            margin-top: -8px;
+            margin-bottom: 28px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .dashboard-card {
+            display: block;
+            color: inherit;
+            text-decoration: none;
+            transition:
+                transform 0.15s ease,
+                box-shadow 0.15s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                0 5px 16px rgba(0, 0, 0, 0.09);
+        }
+
+        .dashboard-card h2 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+
+        .dashboard-card p {
+            color: #6b7280;
+            margin-bottom: 0;
+        }
+
+        .alert-title {
+            margin: 0 0 12px;
+            font-size: 18px;
+        }
+
+        .alert-meta {
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .alert-link {
+            display: inline-block;
+            margin-top: 12px;
+            font-weight: 600;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 48px 20px;
+            color: #6b7280;
+        }
+
+        .empty-state h2 {
+            color: #1f2937;
+        }
+
         footer {
             text-align: center;
             color: #6b7280;
             padding: 30px;
             font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 18px 20px;
+            }
+
+            .header-content {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            nav {
+                gap: 18px;
+            }
+
+            main {
+                margin-top: 28px;
+            }
         }
     </style>
 </head>
@@ -115,9 +233,44 @@
 <body>
 
 <header>
-    <a href="/status/artifacthub">
-        <strong>StatusPulse</strong>
-    </a>
+    <div class="header-content">
+        <a
+            href="/"
+            class="brand"
+        >
+            StatusPulse
+        </a>
+
+        <nav>
+            <a
+                href="/"
+                class="{% if request.url.path == '/' %}active{% endif %}"
+            >
+                Home
+            </a>
+
+            <a
+                href="/alerts"
+                class="{% if request.url.path == '/alerts' %}active{% endif %}"
+            >
+                Alerts
+            </a>
+
+            <a
+                href="/releases"
+                class="{% if request.url.path == '/releases' %}active{% endif %}"
+            >
+                Releases
+            </a>
+
+            <a
+                href="/artifacthub"
+                class="{% if request.url.path.startswith('/artifacthub') %}active{% endif %}"
+            >
+                ArtifactHub
+            </a>
+        </nav>
+    </div>
 </header>
 
 <main>

@@ -1,12 +1,95 @@
 import asyncio
-import io
-import subprocess
-import tarfile
-import tempfile
-from pathlib import Path
+import logging
+from urllib.parse import quote
 
 import httpx
 import yaml
+
+
+logger = logging.getLogger(__name__)
+
+API_URL = "https://artifacthub.io/api/v1"
+
+HTTP_TIMEOUT = httpx.Timeout(30.0, connect=10.0)
+
+HTTP_MAX_ATTEMPTS = 3
+
+
+async def request_with_retry(
+    client: httpx.AsyncClient,
+    url: str,
+) -> httpx.Response:
+    max_attempts = 5
+    max_delay = 120
+
+    for attempt in range(1, max_attempts + 1):
+        try:
+            response = await client.get(
+                url,
+                timeout=HTTP_TIMEOUT,
+            )
+
+            if response.status_code == 429:
+                retry_after = response.headers.get("Retry-After")
+
+                try:
+                    delay = float(retry_after) if retry_after else 10 * attempt
+                except ValueError:
+                    delay = 10 * attempt
+
+                delay = min(max(delay, 1), max_delay)
+
+                logger.warning(
+                    "ArtifactHub rate limit (429), attempt %d/%d. "
+                    "Retrying in %.1f seconds: %s",
+                    attempt,
+                    max_attempts,
+                    delay,
+                    url,
+                )
+
+                if attempt == max_attempts:
+                    response.raise_for_status()
+
+                await asyncio.sleep(delay)
+                continue
+
+            response.raise_for_status()
+            return response
+
+        except httpx.HTTPStatusError as exc:
+            status_code = exc.response.status_code
+
+            if status_code < 500:
+                raise
+
+            logger.warning(
+                "ArtifactHub returned HTTP %s "
+                "(attempt %d/%d): %s",
+                status_code,
+                attempt,
+                max_attempts,
+                url,
+            )
+
+        except httpx.RequestError:
+            logger.warning(
+                "ArtifactHub request failed "
+                "(attempt %d/%d): %s",
+                attempt,
+                max_attempts,
+                url,
+                exc_info=True,
+            )
+
+        if attempt < max_attempts:
+            delay = min(2 ** attempt, max_delay)
+            await asyncio.sleep(delay)
+
+    raise RuntimeError(
+        f"ArtifactHub request failed after "
+        f"{max_attempts} attempts: {url}"
+    )
 
 
 async def get_version(
@@ -14,95 +97,101 @@ async def get_version(
     package_name: str,
     version: str,
 ) -> dict:
+    """
+    Pobiera szczegóły konkretnej wersji pakietu.
+
+    package_name powinien mieć format:
+    repozytorium/nazwa-pakietu
+    """
+
+    parts = package_name.split("/", 1)
+
+    if len(parts) != 2 or not all(parts):
+        raise ValueError(
+            f"Invalid ArtifactHub package name: {package_name!r}. "
+            "Expected format: repository/package"
+        )
+
+    repository, chart_name = parts
+
     url = (
-        "https://artifacthub.io/api/v1/packages/helm/"
-        f"{package_name}/{version}"
+        f"{API_URL}/packages/helm/"
+        f"{quote(repository, safe='')}/"
+        f"{quote(chart_name, safe='')}/"
+        f"{quote(version, safe='')}"
     )
 
-    response = await client.get(url)
-    response.raise_for_status()
+    response = await request_with_retry(
+        client,
+        url,
+    )
 
-    return response.json()
+    data = response.json()
 
-
-def download_oci_values(
-    chart_url: str,
-    version: str,
-) -> dict:
-    with tempfile.TemporaryDirectory() as directory:
-        subprocess.run(
-            [
-                "helm",
-                "pull",
-                chart_url,
-                "--version",
-                version,
-                "--destination",
-                directory,
-            ],
-            check=True,
-            capture_output=True,
-            text=True,
+    if not isinstance(data, dict):
+        raise ValueError(
+            f"Unexpected ArtifactHub response for "
+            f"{package_name}:{version}"
         )
 
-        chart_files = list(
-            Path(directory).glob("*.tgz")
-        )
+    return data
 
-        if not chart_files:
-            raise RuntimeError(
-                f"No Helm chart downloaded from {chart_url}"
-            )
 
-        with tarfile.open(
-            chart_files[0],
-            mode="r:gz",
-        ) as tar:
-            values_file = next(
-                member
-                for member in tar.getmembers()
-                if member.name.endswith("/values.yaml")
-            )
-
-            content = tar.extractfile(values_file).read()
-
-            return yaml.safe_load(content) or {}
-
-        
 async def download_values(
     client: httpx.AsyncClient,
-    chart_url: str,
+    package_id: str,
     version: str,
 ) -> dict:
-    if chart_url.startswith("oci://"):
-        return await asyncio.to_thread(
-            download_oci_values,
-            chart_url,
-            version,
+    """
+    Pobiera values.yaml bezpośrednio z ArtifactHub API.
+
+    Nie wymaga lokalnej instalacji Helm ani pobierania archiwum OCI.
+    """
+
+    if not package_id:
+        raise ValueError(
+            "ArtifactHub package_id is missing"
         )
 
-    response = await client.get(
-        chart_url,
-        follow_redirects=True,
+    url = (
+        f"{API_URL}/packages/"
+        f"{quote(package_id, safe='')}/"
+        f"{quote(version, safe='')}/values"
     )
-    response.raise_for_status()
 
-    with tarfile.open(
-        fileobj=io.BytesIO(response.content),
-        mode="r:gz",
-    ) as tar:
-        values_file = next(
-            member
-            for member in tar.getmembers()
-            if member.name.endswith("/values.yaml")
+    response = await request_with_retry(
+        client,
+        url,
+    )
+
+    try:
+        values = yaml.safe_load(response.text)
+
+    except yaml.YAMLError as exc:
+        raise ValueError(
+            f"Could not parse values for "
+            f"package_id={package_id}, version={version}"
+        ) from exc
+
+    if values is None:
+        return {}
+
+    if not isinstance(values, dict):
+        raise ValueError(
+            f"Expected a YAML mapping for "
+            f"package_id={package_id}, version={version}"
         )
 
-        content = tar.extractfile(values_file).read()
-
-        return yaml.safe_load(content) or {}
+    return values
 
 
-def diff_dict(old, new, path=""):
+def diff_dict(
+    old,
+    new,
+    path="",
+) -> list[dict]:
+    """Porównuje dwie struktury słowników i zwraca listę zmian."""
+
     changes = []
 
     old = old or {}
@@ -114,7 +203,7 @@ def diff_dict(old, new, path=""):
         current_path = (
             f"{path}.{key}"
             if path
-            else key
+            else str(key)
         )
 
         if key not in old:
@@ -160,6 +249,19 @@ async def get_values_diff(
     previous_version: str,
     latest_version: str,
 ) -> list[dict]:
+    """Porównuje values dwóch wersji pakietu w ArtifactHub."""
+
+    if previous_version == latest_version:
+        return []
+
+    logger.info(
+        "ArtifactHub: fetching values diff for %s: %s -> %s",
+        package_name,
+        previous_version,
+        latest_version,
+    )
+
+    # Pobieramy szczegóły obu wersji.
     latest = await get_version(
         client,
         package_name,
@@ -172,19 +274,45 @@ async def get_values_diff(
         previous_version,
     )
 
+    # Identyfikator pakietu powinien być dostępny w odpowiedzi API.
+    latest_package_id = latest.get("package_id")
+    previous_package_id = previous.get("package_id")
+
+    if not latest_package_id or not previous_package_id:
+        raise ValueError(
+            f"ArtifactHub response does not contain package_id "
+            f"for {package_name}: "
+            f"{previous_version} -> {latest_version}"
+        )
+
+    if latest_package_id != previous_package_id:
+        raise ValueError(
+            f"ArtifactHub package ID changed for {package_name}: "
+            f"{previous_package_id} != {latest_package_id}"
+        )
+
+    # Pobieramy wartości bezpośrednio z API.
     latest_values = await download_values(
         client,
-        latest["content_url"],
+        latest_package_id,
         latest_version,
     )
 
     previous_values = await download_values(
         client,
-        previous["content_url"],
+        previous_package_id,
         previous_version,
     )
 
-    return diff_dict(
+    changes = diff_dict(
         previous_values,
         latest_values,
     )
+
+    logger.info(
+        "ArtifactHub: found %d values change(s) for %s",
+        len(changes),
+        package_name,
+    )
+
+    return changes

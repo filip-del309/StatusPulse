@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home | StatusPulse
+{% endblock %}
+
+{% block content %}
+
+<h1>StatusPulse</h1>
+
+<p class="page-description">
+    Monitor service incidents and software releases
+    in one place.
+</p>
+
+<div class="grid">
+
+    <a
+        href="/alerts"
+        class="card dashboard-card"
+    >
+        <h2>Active Alerts</h2>
+
+        <p>
+            {{ active_alerts_count }}
+            active alert(s)
+        </p>
+    </a>
+
+    <a
+        href="/releases"
+        class="card dashboard-card"
+    >
+        <h2>Releases</h2>
+
+        <p>
+            Monitor new versions and software updates.
+        </p>
+    </a>
+
+    <a
+        href="/artifacthub"
+        class="card dashboard-card"
+    >
+        <h2>ArtifactHub</h2>
+
+        <p>
+            Browse monitored Helm charts and their status.
+        </p>
+    </a>
+
+</div>
+
+{% endblock %}

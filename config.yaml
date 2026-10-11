@@ -211,13 +211,13 @@ sources:
       type: interval
       interval: 600
     filters:
-      required_matches: 2
+      required_matches: 1
       severity:
         enabled: true
         values:
-          - Maintenance
+          # - Maintenance
           - Major
-          - Minor
+          # - Minor
       components:
         enabled: true
         values:
@@ -311,7 +311,7 @@ sources:
     enabled: true
     schedule:
       type: cron
-      cron: "0 7 * * 1" # cron: "12 20 * * *"
+      cron: "0 7 * * 1" # cron: ""27 19 * * *
       timezone: Europe/Warsaw
     lookback_hours: 168
     statuspulse_url: http://localhost:8000
