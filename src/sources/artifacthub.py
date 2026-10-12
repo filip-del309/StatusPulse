@@ -10,44 +10,35 @@ from notifications.base import Notifier
 from sources.base import Source
 from sources.helm import get_values_diff
 from services.git import GitRepository
+from services.storage import Storage
 
 logger = logging.getLogger(__name__)
 
 
 class ArtifactHubSource(Source):
-    def __init__(
-        self,
-        client: httpx.AsyncClient,
-        notifier: Notifier,
-        packages,
-        lookback_hours: int,
-        statuspulse_url: str,
-        repository: GitRepository,
-    ):
+    def __init__(self, client: httpx.AsyncClient, notifier: Notifier, packages, lookback_hours: int, statuspulse_url: str, repository: GitRepository, storage: Storage):
         self.client = client
         self.notifier = notifier
         self.packages = packages
         self.lookback = timedelta(hours=lookback_hours)
         self.statuspulse_url = statuspulse_url.rstrip("/")
         self.repository = repository
-        self.packages_data = {}
+        self.storage = storage
+        self.packages_data = {
+            package["package"]: package
+            for package in self.storage.get_artifacthub_packages()
+        }
 
     @property
     def name(self) -> str:
         return "artifacthub"
 
     async def run(self) -> None:
-        await asyncio.to_thread(
-            self.repository.pull,
-        )
+        await asyncio.to_thread(self.repository.pull)
 
         cutoff = (datetime.now(timezone.utc) - self.lookback)
 
-        logger.info(
-            "ArtifactHub: checking packages "
-            "published since %s",
-            cutoff.isoformat(),
-        )
+        logger.info("ArtifactHub: checking packages published since %s", cutoff.isoformat())
 
         repository_data = await asyncio.to_thread(self.scan_repository)
 
@@ -56,11 +47,7 @@ class ArtifactHubSource(Source):
         for index, package in enumerate(self.packages):
             package_data = repository_data.get(package.name, {})
 
-            result = await self.get_package(
-                package,
-                package_data,
-                cutoff,
-            )
+            result = await self.get_package(package, package_data, cutoff)
 
             if result:
                 updates.extend(result)
@@ -72,9 +59,7 @@ class ArtifactHubSource(Source):
             logger.info("ArtifactHub: no updates found")
             return
 
-        statuspulse_url = (
-            f"{self.statuspulse_url}/artifacthub"
-        )
+        statuspulse_url = (f"{self.statuspulse_url}/artifacthub")
 
         message = (
             f"📢 <b>Helm chart updates:</b>\n\n"
@@ -83,23 +68,15 @@ class ArtifactHubSource(Source):
 
         message += "\n".join(updates)
 
-        # await self.notifier.send(message)
+        await self.notifier.send(message)
 
-        logger.info(
-            "ArtifactHub alert sent to Telegram"
-        )
+        logger.info("ArtifactHub alert sent to Telegram")
 
     def scan_repository(self) -> dict:
-        repository_path = Path(
-            self.repository.path
-        )
+        repository_path = Path(self.repository.path)
 
         if not repository_path.exists():
-            logger.warning(
-                "ArtifactHub: repository directory "
-                "does not exist: %s",
-                repository_path,
-            )
+            logger.warning("ArtifactHub: repository directory does not exist: %s", repository_path)
 
             return {}
 
@@ -109,17 +86,11 @@ class ArtifactHubSource(Source):
             if not file_path.is_file():
                 continue
 
-            if file_path.suffix not in (
-                ".yaml",
-                ".yml",
-            ):
+            if file_path.suffix not in (".yaml", ".yml"):
                 continue
 
             try:
-                with file_path.open(
-                    "r",
-                    encoding="utf-8",
-                ) as file:
+                with file_path.open("r", encoding="utf-8") as file:
                     documents = yaml.safe_load_all(file)
 
                     for document in documents:
@@ -129,11 +100,7 @@ class ArtifactHubSource(Source):
                         if document.get("kind") != "Application":
                             continue
 
-                        source = (
-                            document
-                            .get("spec", {})
-                            .get("source", {})
-                        )
+                        source = (document.get("spec", {}).get("source", {}))
 
                         path = source.get("path")
 
@@ -150,36 +117,17 @@ class ArtifactHubSource(Source):
                         if path_parts[0] != "helm-versions":
                             continue
 
-                        applications.append({
-                            "path": path,
-                            "file": str(file_path),
-                        })
+                        applications.append({"path": path, "file": str(file_path)})
 
             except yaml.YAMLError:
-                logger.warning(
-                    "ArtifactHub: could not parse YAML file %s",
-                    file_path,
-                )
+                logger.warning("ArtifactHub: could not parse YAML file %s", file_path)
 
-        return self.find_repository_versions(
-            applications,
-        )
+        return self.find_repository_versions(applications)
     
-    def find_repository_versions(
-        self,
-        applications: list[dict],
-    ) -> dict:
+    def find_repository_versions(self, applications: list[dict]) -> dict:
         repository_data = {}
 
-        folders = sorted(
-            {
-                folder
-                for package in self.packages
-                for folder in package.folders
-            },
-            key=len,
-            reverse=True,
-        )
+        folders = sorted({folder for package in self.packages for folder in package.folders}, key=len, reverse=True)
 
         for package in self.packages:
             package_data = {}
@@ -195,16 +143,7 @@ class ArtifactHubSource(Source):
                     if not path.startswith(prefix):
                         continue
 
-                    matched_folder = next(
-                        (
-                            configured_folder
-                            for configured_folder in folders
-                            if path.startswith(
-                                f"helm-versions/{configured_folder}-"
-                            )
-                        ),
-                        None,
-                    )
+                    matched_folder = next((configured_folder for configured_folder in folders if path.startswith(f"helm-versions/{configured_folder}-")), None)
 
                     if matched_folder != folder:
                         continue
@@ -214,43 +153,20 @@ class ArtifactHubSource(Source):
                     if not version:
                         continue
 
-                    versions.append({
-                        "version": version,
-                        "path": path,
-                        "file": application["file"],
-                    })
+                    versions.append({"version": version, "path": path, "file": application["file"]})
 
                 if not versions:
-                    logger.warning(
-                        "ArtifactHub: no version found "
-                        "for package '%s', folder '%s'",
-                        package.name,
-                        folder,
-                    )
+                    logger.warning("ArtifactHub: no version found for package '%s', folder '%s'", package.name, folder)
 
                     continue
 
-                versions.sort(
-                    key=lambda item: self.version_key(
-                        item["version"]
-                    )
-                )
+                versions.sort(key=lambda item: self.version_key(item["version"]))
 
                 oldest = versions[0]
 
-                package_data[folder] = {
-                    "version": oldest["version"],
-                    "path": oldest["path"],
-                    "file": oldest["file"],
-                }
+                package_data[folder] = {"version": oldest["version"], "path": oldest["path"], "file": oldest["file"]}
 
-                logger.info(
-                    "ArtifactHub: package '%s', folder '%s': "
-                    "oldest repository version=%s",
-                    package.name,
-                    folder,
-                    oldest["version"],
-                )
+                logger.info("ArtifactHub: package '%s', folder '%s': oldest repository version=%s", package.name, folder, oldest["version"])
 
             repository_data[package.name] = package_data
 
@@ -259,24 +175,15 @@ class ArtifactHubSource(Source):
     async def get_package(self, package, repository_data: dict, cutoff: datetime):
         package_name = package.name
 
-        url = (
-            f"https://artifacthub.io/api/v1/packages/helm/"
-            f"{package_name}"
-        )
+        url = (f"https://artifacthub.io/api/v1/packages/helm/{package_name}")
 
         response = await self.client.get(url)
         response.raise_for_status()
 
-        versions = response.json().get(
-            "available_versions",
-            [],
-        )
+        versions = response.json().get("available_versions", [])
 
         if not versions:
-            logger.info(
-                "ArtifactHub package '%s' has no versions",
-                package_name,
-            )
+            logger.info("ArtifactHub package '%s' has no versions", package_name)
 
             return None
 
@@ -285,19 +192,12 @@ class ArtifactHubSource(Source):
         version = last_version["version"]
         app_version = last_version.get("app_version")
 
-        version_date = datetime.fromtimestamp(
-            last_version["ts"],
-            tz=timezone.utc,
-        )
+        version_date = datetime.fromtimestamp(last_version["ts"], tz=timezone.utc)
 
         is_new = version_date > cutoff
 
         if not repository_data:
-            logger.info(
-                "ArtifactHub package '%s': "
-                "no matching repository folder found",
-                package_name,
-            )
+            logger.info("ArtifactHub package '%s': no matching repository folder found", package_name)
 
             if not is_new:
                 return None
@@ -321,42 +221,26 @@ class ArtifactHubSource(Source):
 
                 continue
 
-            logger.info(
-                "ArtifactHub values diff: package=%s, "
-                "folder=%s, used_version=%s, latest_version=%s",
-                package_name,
-                folder,
-                used_version,
-                version,
-            )
+            logger.info("ArtifactHub values diff: package=%s, folder=%s, used_version=%s, latest_version=%s", package_name, folder, used_version, version)
 
-            values_diff[folder] = await get_values_diff(
-                self.client,
-                package_name,
-                used_version,
-                version,
-            )
+            values_diff[folder] = await get_values_diff(self.client, package_name, used_version, version)
 
-        self.packages_data[package_name] = {
-            "package": package_name,
-            "chart": package_name.split("/", 1)[1],
-            "version": version,
-            "app_version": app_version,
-            "published": version_date,
-            "is_new": is_new,
-            "repository_versions": repository_versions,
-            "values_diff": values_diff,
-        }
+            package_data = {
+                "package": package_name,
+                "chart": package_name.split("/", 1)[1],
+                "version": version,
+                "app_version": app_version,
+                "published": version_date,
+                "is_new": is_new,
+                "repository_versions": repository_versions,
+                "values_diff": values_diff,
+            }
 
-        logger.info(
-            "ArtifactHub package '%s': "
-            "version=%s, published=%s, cutoff=%s, new=%s",
-            package_name,
-            version,
-            version_date.isoformat(),
-            cutoff.isoformat(),
-            is_new,
-        )
+            self.packages_data[package_name] = package_data
+
+            await asyncio.to_thread(self.storage.save_artifacthub_package, package_name, package_data)
+
+        logger.info("ArtifactHub package '%s': version=%s, published=%s, cutoff=%s, new=%s", package_name, version, version_date.isoformat(), cutoff.isoformat(), is_new)
 
         if not is_new:
             return None

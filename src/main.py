@@ -3,7 +3,7 @@ import logging
 
 import httpx
 import uvicorn
-
+import os 
 from api import app, set_artifacthub_source
 from config import load_config
 from notifications.telegram import TelegramNotifier
@@ -13,7 +13,13 @@ from sources.cloudflare import CloudflareSource
 from sources.tailscale import TailscaleSource
 from sources.scaleway import ScalewaySource
 from services.git import GitRepository
+from services.storage import Storage
 
+
+DATABASE_PATH = os.getenv(
+    "STATUSPULSE_DB_PATH",
+    "./data/statuspulse.db",
+)
 
 class SecretFilter(logging.Filter):
     def __init__(self, secrets: list[str]):
@@ -84,6 +90,8 @@ async def main():
 
         artifacthub_repository.clone()
 
+        storage = Storage(database_path=DATABASE_PATH)
+
         artifacthub_source = ArtifactHubSource(
             client=client,
             notifier=notifier,
@@ -91,6 +99,7 @@ async def main():
             lookback_hours=(config.sources.artifacthub.lookback_hours),
             statuspulse_url=(config.sources.artifacthub.statuspulse_url),
             repository=artifacthub_repository,
+            storage=storage,
         )
 
         set_artifacthub_source(artifacthub_source)
