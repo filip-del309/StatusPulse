@@ -172,13 +172,60 @@ class ArtifactHubSource(Source):
 
         return repository_data
 
+    async def get_package_response(self, url: str, max_attempts: int = 4,) -> httpx.Response | None:
+        for attempt in range(max_attempts):
+            try:
+                response = await self.client.get(url)
+
+                if response.status_code == 429:
+                    retry_after = response.headers.get("Retry-After")
+
+                    try:
+                        delay = float(retry_after) if retry_after else 2 ** (attempt + 1)
+                    except ValueError:
+                        delay = 2 ** (attempt + 1)
+
+                    if attempt == max_attempts - 1:
+                        logger.warning("ArtifactHub rate limit persists for %s after %s attempts", url, max_attempts)
+                        return None
+
+                    delay = max(delay, 1.0)
+
+                    logger.warning("ArtifactHub rate limit for %s. Retry %s/%s in %.1f seconds", url, attempt + 1, max_attempts, delay)
+
+                    await asyncio.sleep(delay)
+                    continue
+
+                response.raise_for_status()
+                return response
+
+            except httpx.HTTPStatusError as exc:
+                logger.error("ArtifactHub HTTP error for %s: %s", url, exc)
+                return None
+
+            except httpx.RequestError as exc:
+                if attempt == max_attempts - 1:
+                    logger.error("ArtifactHub request failed for %s after %s attempts: %s", url, max_attempts, exc)
+                    return None
+
+                delay = 2 ** (attempt + 1)
+
+                logger.warning("ArtifactHub request error for %s. Retry %s/%s in %s seconds: %s", url, attempt + 1, max_attempts, delay, exc)
+
+                await asyncio.sleep(delay)
+
+        return None
+
     async def get_package(self, package, repository_data: dict, cutoff: datetime):
         package_name = package.name
 
-        url = (f"https://artifacthub.io/api/v1/packages/helm/{package_name}")
+        url = f"https://artifacthub.io/api/v1/packages/helm/{package_name}"
 
-        response = await self.client.get(url)
-        response.raise_for_status()
+        response = await self.get_package_response(url)
+
+        if response is None:
+            logger.warning("ArtifactHub: skipping package '%s' because its data could not be fetched", package_name)
+            return None
 
         versions = response.json().get("available_versions", [])
 

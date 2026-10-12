@@ -30,12 +30,19 @@ async def request_with_retry(
             )
 
             if response.status_code == 429:
+                if attempt == max_attempts:
+                    response.raise_for_status()
+
                 retry_after = response.headers.get("Retry-After")
 
                 try:
-                    delay = float(retry_after) if retry_after else 10 * attempt
+                    delay = (
+                        float(retry_after)
+                        if retry_after
+                        else min(10 * attempt, max_delay)
+                    )
                 except ValueError:
-                    delay = 10 * attempt
+                    delay = min(10 * attempt, max_delay)
 
                 delay = min(max(delay, 1), max_delay)
 
@@ -48,9 +55,6 @@ async def request_with_retry(
                     url,
                 )
 
-                if attempt == max_attempts:
-                    response.raise_for_status()
-
                 await asyncio.sleep(delay)
                 continue
 
@@ -60,30 +64,43 @@ async def request_with_retry(
         except httpx.HTTPStatusError as exc:
             status_code = exc.response.status_code
 
+            # Nie ponawiamy błędów klienta, np. 400, 401, 403, 404.
             if status_code < 500:
                 raise
 
+            if attempt == max_attempts:
+                raise
+
+            delay = min(2 ** attempt, max_delay)
+
             logger.warning(
                 "ArtifactHub returned HTTP %s "
-                "(attempt %d/%d): %s",
+                "(attempt %d/%d). Retrying in %s seconds: %s",
                 status_code,
                 attempt,
                 max_attempts,
+                delay,
                 url,
             )
 
+            await asyncio.sleep(delay)
+
         except httpx.RequestError:
+            if attempt == max_attempts:
+                raise
+
+            delay = min(2 ** attempt, max_delay)
+
             logger.warning(
                 "ArtifactHub request failed "
-                "(attempt %d/%d): %s",
+                "(attempt %d/%d). Retrying in %s seconds: %s",
                 attempt,
                 max_attempts,
+                delay,
                 url,
                 exc_info=True,
             )
 
-        if attempt < max_attempts:
-            delay = min(2 ** attempt, max_delay)
             await asyncio.sleep(delay)
 
     raise RuntimeError(
