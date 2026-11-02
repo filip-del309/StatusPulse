@@ -1,7 +1,3 @@
-telegram:
-  bot_token: ${TELEGRAM_BOT_TOKEN}
-  chat_id: ${TELEGRAM_CHAT_ID}
-
 database:
   artifacthub_path: ./data/statuspulse.db
 
@@ -314,7 +310,7 @@ sources:
     enabled: true
     schedule:
       type: cron
-      cron: "38 14 * * *" # cron: ""0 7 * * 1
+      cron: "12 19 * * *" # cron: ""0 7 * * 1
       timezone: Europe/Warsaw
     lookback_hours: 168
     statuspulse_url: http://localhost:8000
@@ -323,130 +319,262 @@ sources:
       url: https://github.com/filip-del309/test-cloud-kube-infra.git
       branch: main
       path: ./data/test-cloud-kube-infra
-      username: ${GITHUB_USERNAME}
-      token: ${GITHUB_TOKEN}
 
     packages:
       - name: grafana/alloy
         folders:
           - alloy
+        releases:
+          provider: github
+          project: grafana/alloy
       - name: argo/argo-cd
         folders: 
           - argo-cd
+        releases:
+          provider: github
+          project: argoproj/argo-cd
       - name: argo/argo-events
         folders: 
           - argo-events
+        releases:
+          provider: github
+          project: argoproj/argo-events
       - name: argo/argo-workflows
         folders: 
           - argo-workflows
+        releases:
+          provider: github
+          project: argoproj/argo-workflows
       - name: argo/argocd-image-updater
         folders: 
           - argocd-image-updater
+        releases:
+          provider: github
+          project: argoproj-labs/argocd-image-updater
       - name: atlantis/atlantis
         folders: 
           - atlantis
+        releases:
+          provider: github
+          project: runatlantis/atlantis
       - name: aws/aws-load-balancer-controller
         folders: 
           - aws-lb-controller
+        releases:
+          provider: github
+          project: kubernetes-sigs/aws-load-balancer-controller
       - name: backstage/backstage
         folders: 
           - backstage
+        releases:
+          provider: github
+          project: backstage/backstage
       - name: bytebase/bytebase
         folders: 
           - bytebase
+        releases:
+          provider: github
+          project: bytebase/bytebase
       - name: cert-manager/cert-manager
         folders: 
           - cert-manager
+        releases:
+          provider: github
+          project: cert-manager/cert-manager
+      - name: cloudnative-pg/cloudnative-pg
+        folders:
+          - cloudnative-pg
+        releases:
+          provider: github
+          project: cloudnative-pg/cloudnative-pg
       - name: external-dns/external-dns
         folders: 
           - external-dns-cloudflare
           - external-dns-route53
+        releases:
+          provider: github
+          project: kubernetes-sigs/external-dns
       - name: external-secrets-operator/external-secrets
         folders: 
           - external-secrets
+        releases:
+          provider: github
+          project: external-secrets/external-secrets
       - name: forgejo-helm/forgejo
         folders: 
           - forgejo
+        releases:
+          provider: codeberg
+          project: forgejo/forgejo
+          api_url: https://codeberg.org/api/v1
+          branch: forgejo/release-notes-published
       - name: grafana-community/grafana
         folders: 
           - grafana
+        releases:
+          provider: github
+          project: grafana/grafana
       - name: grafana-community/grafana-mcp
         folders: 
           - grafana-mcp
+        releases:
+          provider: github
+          project: grafana/mcp-grafana
       - name: grafana/grafana-operator
         folders: 
           - grafana-operator
+        releases:
+          provider: github
+          project: grafana/grafana-operator
       - name: m0nsterrr-homepage/homepage
         folders: 
           - homepage
+        releases:
+          provider: github
+          project: gethomepage/homepage
       - name: ingress-nginx/ingress-nginx
         folders:
           - ingress-nginx-internal
           - ingress-nginx-external
+        releases:
+          provider: github
+          project: kubernetes/ingress-nginx
       - name: kafka-ui/kafka-ui
         folders:
           - kafka-ui
+        releases:
+          provider: github
+          project: kafbat/kafka-ui
       - name: cloudpirates-keycloak/keycloak
         folders:
           - keycloak
+        releases:
+          provider: github
+          project: keycloak/keycloak
       - name: prometheus-community/kube-prometheus-stack
         folders:
           - kube-prometheus-stack
+        releases:
+          provider: github
+          project: prometheus-operator/prometheus-operator
       - name: librechat/librechat
         folders:
           - librechat
+        releases:
+          provider: github
+          project: LibreChat-AI/LibreChat
       - name: litellm/litellm-helm
         folders:
           - litellm
+        releases:
+          provider: github
+          project: BerriAI/litellm
       - name: grafana-community/loki
         folders:
           - loki
+        releases:
+          provider: github
+          project: grafana/loki
       - name: longhorn/longhorn
         folders:
           - longhorn
+        releases:
+          provider: github
+          project: longhorn/longhorn
       - name: metrics-server/metrics-server
         folders:
           - metrics-server
+        releases:
+          provider: github
+          project: kubernetes-sigs/metrics-server
       - name: nextcloud/nextcloud
         folders:
           - nextcloud
+        releases:
+          provider: github
+          project: nextcloud/server
       - name: oauth2-proxy/oauth2-proxy
         folders:
           - oauth2-proxy
+        releases:
+          provider: github
+          project: oauth2-proxy/oauth2-proxy
       - name: openebs/openebs
         folders:
           - openebs
+        releases:
+          provider: github
+          project: openebs/openebs
       - name: ory/hydra
         folders:
           - ory-hydra
+        releases:
+          provider: github
+          project: ory/hydra
       - name: ory/kratos
         folders:
           - ory-kratos
+        releases:
+          provider: github
+          project: ory/kratos
+      - name: cloudnative-pg/plugin-barman-cloud
+        folders:
+          - plugin-barman-cloud
+        releases:
+          provider: github
+          project: cloudnative-pg/plugin-barman-cloud
       - name: portainer/portainer
         folders:
           - portainer
+        releases:
+          provider: github
+          project: portainer/portainer
       - name: prefect/prefect-server
         folders:
           - prefect-server
+        releases:
+          provider: github
+          project: PrefectHQ/prefect
       - name: prefect/prefect-worker
         folders:
           - prefect-worker
+        releases:
+          provider: github
+          project: PrefectHQ/prefect
       - name: redpanda-data/console
         folders:
           - redpanda-console
+        releases:
+          provider: github
+          project: redpanda-data/console
       - name: stakater/reloader
         folders:
           - reloader
+        releases:
+          provider: github
+          project: stakater/Reloader
       - name: tailscale/tailscale-operator
         folders:
           - tailscale-operator
+        releases:
+          provider: github
+          project: tailscale/tailscale
       - name: valkey/valkey
         folders:
           - valkey
+        releases:
+          provider: github
+          project: valkey-io/valkey
       - name: vmware-tanzu/velero
         folders:
           - velero
+        releases:
+          provider: github
+          project: velero-io/velero
       - name: zabbix-community/zabbix
         folders:
           - zabbix
           - zabbix-agent
+        releases:
+          provider: github
+          project: zabbix/zabbix

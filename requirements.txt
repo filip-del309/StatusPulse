@@ -5,3 +5,7 @@ croniter
 fastapi
 uvicorn[standard]
 Jinja2
+Markdown
+bleach
+openai
+beautifulsoup4

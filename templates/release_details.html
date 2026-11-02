@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ package.chart | default(package.package, true) }} | Release Notes | StatusPulse
+{% endblock %}
+
+{% block content %}
+
+<p>
+    <a href="/releases">← Back to Release Notes</a>
+</p>
+
+<h1>
+    {{ package.chart | default(package.package, true) }}
+</h1>
+
+<p>
+    Release notes for the application.
+</p>
+
+<div class="card">
+
+    <p>
+        <strong>Chart:</strong>
+        {{ package.chart | default(package.package, true) }}
+    </p>
+
+    <p>
+        <strong>Folder:</strong>
+        <code>{{ package.folder }}</code>
+    </p>
+
+    <p>
+        <strong>Application version:</strong>
+        <code>
+            {{ package.previous_version | default('?') }}
+            →
+            {{ package.latest_version | default('?') }}
+        </code>
+    </p>
+
+    <p>
+        <strong>Provider:</strong>
+        {{ package.provider | default('Unknown') }}
+    </p>
+
+    <p>
+        <strong>Project:</strong>
+        {{ package.project | default('Unknown') }}
+    </p>
+
+</div>
+
+<h2>Releases</h2>
+
+{% if package.status == "error" %}
+
+    <div class="card">
+        Could not fetch release notes for this application.
+        {% if package.error %}
+            <p>{{ package.error }}</p>
+        {% endif %}
+    </div>
+
+{% elif package.releases %}
+
+    {% for release in package.releases %}
+
+        <div class="card">
+
+            <h3>
+                {% if release.url %}
+                    <a href="{{ release.url }}" target="_blank" rel="noopener noreferrer">
+                        {{ release.name | default(release.version, true) }}
+                    </a>
+                {% else %}
+                    {{ release.name | default(release.version, true) }}
+                {% endif %}
+            </h3>
+
+            <p>
+                Version:
+                <code>{{ release.version }}</code>
+            </p>
+
+            {% if release.published_at %}
+                <p>
+                    Published:
+                    {{ release.published_at }}
+                </p>
+            {% endif %}
+
+            {% if release.body %}
+
+                <div class="release-notes">
+                    {{ release.body | safe }}
+                </div>
+
+            {% else %}
+
+                <p>No release description provided.</p>
+
+            {% endif %}
+
+        </div>
+
+    {% endfor %}
+
+{% else %}
+
+    <div class="card">
+        No release notes available for this version range.
+    </div>
+
+{% endif %}
+
+{% endblock %}

@@ -1,23 +1,85 @@
 {% extends "base.html" %}
 
 {% block title %}
-Releases | StatusPulse
+Release Notes | StatusPulse
 {% endblock %}
 
 {% block content %}
 
-<h1>Releases</h1>
+<h1>Release Notes</h1>
 
-<p class="page-description">
-    Monitor new software versions and releases.
+<p>
+    Release notes for monitored applications.
 </p>
 
-<div class="card empty-state">
-    <h2>Coming soon</h2>
+{% if packages %}
 
-    <p>
-        Release monitoring will be available here in a future update.
-    </p>
-</div>
+    {% for package in packages %}
+
+        <div class="card">
+
+            <h2>
+                <a href="/releases/package/{{ package.package | urlencode }}">
+                    {{ package.chart | default(package.package, true) }}
+                </a>
+            </h2>
+
+            <p>
+                <strong>ArtifactHub package:</strong>
+                <code>{{ package.package }}</code>
+            </p>
+
+            <p>
+                <strong>Chart version:</strong>
+                <code>
+                    {{ package.previous_version | default('?') }}
+                    →
+                    {{ package.latest_version | default('?') }}
+                </code>
+            </p>
+
+            {% if package.status == "ok" %}
+
+                <span class="status status-update">
+                    Release notes available
+                </span>
+
+            {% elif package.status == "unchanged" %}
+
+                <span class="status status-ok">
+                    Up to date
+                </span>
+
+            {% elif package.status == "error" %}
+
+                <span class="status status-new">
+                    Error fetching release notes
+                </span>
+
+            {% else %}
+
+                <span class="status">
+                    Not configured
+                </span>
+
+            {% endif %}
+
+            {% if package.updated_at %}
+                <p class="muted">
+                    Last updated: {{ package.updated_at }}
+                </p>
+            {% endif %}
+
+        </div>
+
+    {% endfor %}
+
+{% else %}
+
+    <div class="card">
+        <p>No release notes found.</p>
+    </div>
+
+{% endif %}
 
 {% endblock %}

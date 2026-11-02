@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-{{ package.chart }} - StatusPulse
+{{ package.chart }} | ArtifactHub | StatusPulse
 {% endblock %}
 
 {% block content %}
@@ -28,30 +28,124 @@
 
     <p>
         <strong>Published:</strong>
-        {{ package.published.isoformat() }}
+        {% if package.published %}
+            {{ package.published.isoformat() if package.published.isoformat is defined else package.published }}
+        {% else %}
+            —
+        {% endif %}
     </p>
 
 </div>
 
-{% for folder, used_version in package.repository_versions.items() %}
+{# One shared AI upgrade guide for the whole ArtifactHub package #}
+{% if package.upgrade_guide_previous_version is defined
+      and package.upgrade_guide_latest_version is defined
+      and package.upgrade_guide_previous_version != package.upgrade_guide_latest_version %}
 
-    {% set changes = package.values_diff.get(folder, []) %}
+    <div class="card upgrade-guide">
 
-    {% set added = [] %}
-    {% set changed = [] %}
-    {% set removed = [] %}
+        <h2>AI Upgrade Guide</h2>
 
-    {% for change in changes %}
+        <p>
+            <strong>
+                {{ package.upgrade_guide_previous_version }}
+                →
+                {{ package.upgrade_guide_latest_version }}
+            </strong>
+        </p>
 
-        {% if change.type == "added" %}
-            {% set _ = added.append(change) %}
-        {% elif change.type == "changed" %}
-            {% set _ = changed.append(change) %}
-        {% elif change.type == "removed" %}
-            {% set _ = removed.append(change) %}
+        {% if upgrade_guide %}
+
+            <div class="upgrade-guide-content">
+                {{ upgrade_guide.html | safe }}
+            </div>
+
+            <p class="muted">
+                Generated guide · {{ upgrade_guide.updated_at }}
+            </p>
+
+        {% else %}
+
+            <p>
+                Upgrade guide is not available yet.
+            </p>
+
         {% endif %}
 
-    {% endfor %}
+    </div>
+
+{% endif %}
+
+{# One shared values.yaml diff for the whole ArtifactHub package #}
+{% set changes = package.values_diff.get("package", []) %}
+{% set added = [] %}
+{% set changed = [] %}
+{% set removed = [] %}
+
+{% for change in changes %}
+    {% if change.type == "added" %}
+        {% set _ = added.append(change) %}
+    {% elif change.type == "changed" %}
+        {% set _ = changed.append(change) %}
+    {% elif change.type == "removed" %}
+        {% set _ = removed.append(change) %}
+    {% endif %}
+{% endfor %}
+
+<div class="card">
+
+    <h2>Changes in values.yaml</h2>
+
+    {% if changes %}
+
+        {% if added %}
+            <h3>Added ({{ added|length }})</h3>
+
+            {% for change in added %}
+                <div class="change">
+                    <strong>{{ change.path }}</strong>
+                    <br>
+                    <code>{{ change.new }}</code>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if changed %}
+            <h3>Changed ({{ changed|length }})</h3>
+
+            {% for change in changed %}
+                <div class="change">
+                    <strong>{{ change.path }}</strong>
+                    <br>
+                    <code>{{ change.old }}</code>
+                    →
+                    <code>{{ change.new }}</code>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if removed %}
+            <h3>Removed ({{ removed|length }})</h3>
+
+            {% for change in removed %}
+                <div class="change">
+                    <strong>{{ change.path }}</strong>
+                    <br>
+                    <code>{{ change.old }}</code>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+    {% else %}
+
+        <p>No values.yaml changes found.</p>
+
+    {% endif %}
+
+</div>
+
+{# Repository-specific versions and update statuses #}
+{% for folder, used_version in package.repository_versions.items() %}
 
     <div class="card">
 
@@ -73,107 +167,13 @@
                 Up to date
             </span>
 
-            <p>
-                No update available.
-            </p>
+            <p>No update available.</p>
 
         {% else %}
 
             <span class="status status-update">
                 Update available
             </span>
-
-            {% if changes %}
-
-                <h3>
-                    Changes in values.yaml
-                </h3>
-
-                {% if added %}
-
-                    <h4>
-                        Added ({{ added|length }})
-                    </h4>
-
-                    {% for change in added %}
-
-                        <div class="change">
-                            <strong>
-                                {{ change.path }}
-                            </strong>
-
-                            <br>
-
-                            <code>
-                                {{ change.new }}
-                            </code>
-                        </div>
-
-                    {% endfor %}
-
-                {% endif %}
-
-                {% if changed %}
-
-                    <h4>
-                        Changed ({{ changed|length }})
-                    </h4>
-
-                    {% for change in changed %}
-
-                        <div class="change">
-                            <strong>
-                                {{ change.path }}
-                            </strong>
-
-                            <br>
-
-                            <code>
-                                {{ change.old }}
-                            </code>
-
-                            →
-
-                            <code>
-                                {{ change.new }}
-                            </code>
-                        </div>
-
-                    {% endfor %}
-
-                {% endif %}
-
-                {% if removed %}
-
-                    <h4>
-                        Removed ({{ removed|length }})
-                    </h4>
-
-                    {% for change in removed %}
-
-                        <div class="change">
-                            <strong>
-                                {{ change.path }}
-                            </strong>
-
-                            <br>
-
-                            <code>
-                                {{ change.old }}
-                            </code>
-                        </div>
-
-                    {% endfor %}
-
-                {% endif %}
-
-            {% else %}
-
-                <p>
-                    No values.yaml changes found.
-                </p>
-
-            {% endif %}
 
         {% endif %}
 
@@ -184,9 +184,7 @@
 {% if not package.repository_versions %}
 
     <div class="card">
-        <p>
-            No matching repository versions found.
-        </p>
+        <p>No matching repository versions found.</p>
     </div>
 
 {% endif %}
